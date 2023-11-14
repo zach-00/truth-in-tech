@@ -52,7 +52,7 @@ lint-test-job:
 #     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
 #     # Don't forget to also replace PROJECT NAME in the npm run build line as well
 #     PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
-#     REACT_APP_API_HOST: https://DEPLOYED_API_SERVICE.mod3projects.com
+#     VITE_API_HOST: https://DEPLOYED_API_SERVICE.mod3projects.com
 #   script:
 #     - cd ghi
 #     - npm install
