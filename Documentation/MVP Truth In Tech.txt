@@ -1,0 +1,18 @@
+MVP (minimum viable product):
+1.	As a user not logged in, I can read company review
+2.	As a user not logged in, I can see a list of companies
+3.	As a user not logged in, I can search for reviews by company
+4.	As a new user, I can create an account
+a.	Use third party API to validate email (only if Pydantic email validation does not work)
+5.	As a user with an account, I can login/logout
+6.	As a user I can update/delete my account
+7.	As a logged in user, I can create a company review (with name or anonymously)
+8.	As a logged in user, I can delete a review that I created
+
+Strech goals:
+1.	Up/down vote blog posts
+2.	comment on a blog post
+3.	request a review of a company
+4.	verify if the reviewer currently works for or has worked for the company
+5.	view user profile
+6.	As a logged in user, I can create a company profile
