@@ -1,0 +1,264 @@
+Endpoints
+
+# LOG IN
+* Endpoint path: /token
+* Endpoint method: POST
+
+* Request shape (form):
+  Username: string
+  Password: string
+
+* Response: Account information and a token
+
+* Response shape (JSON):
+    ```json
+    {
+      "account": {
+        First name: string,
+	  Last name: string,
+	  Email: string,
+	  Avatar url: string
+      },
+      "token": string
+    }
+    ```
+
+
+
+# LOG OUT
+
+* Endpoint path: /token
+* Endpoint method: DELETE
+
+* Headers:
+  * Authorization: Bearer token
+
+* Response: Always true
+* Response shape (JSON):
+    ```json
+    true
+    ```
+
+
+
+
+
+
+
+
+
+# CREATE USER
+* Endpoint path: /users
+* Endpoint method: POST
+
+* Request shape (JSON):
+    ```json
+    {
+  User: {
+	Username: string,
+	Password: string,
+	Confirm password: string,
+	Email: string,
+	First name: string,
+	Last name: string,
+	Avatar url: string,
+}	
+}
+    ```
+
+* Response: Indication of Success or failure
+
+* Response shape (JSON):
+    ```json
+    {
+      "account": {
+        First name: string,
+	  Last name: string,
+	  Email: string,
+	  Avatar url: string
+      },
+      "token": string
+    }
+    ```
+    
+
+
+# UPDATE USER
+
+* Endpoint path: /users
+* Endpoint method: PUT
+
+* Headers:
+  * Authorization: Bearer token
+
+* Request shape (JSON):
+    ```json
+{
+	Username: string,
+	Password: string,
+	Confirm password: string,
+	Email: string,
+	First name: string,
+	Last name: string,
+	Avatar url: string,
+}
+        ```
+
+* Response: Indication of success or failure to update
+
+* Response shape (JSON):
+    ```json
+    {“success”: bool}
+    ```
+
+
+# DELETE USER (stretch goal)
+
+
+# CREATE REVIEW
+
+* Endpoint path: /reviews
+* Endpoint method: POST
+
+* Headers:
+  * Authorization: Bearer token
+
+* Request shape (JSON):
+    ```json
+{
+        Anonymous: boolean,
+	  Username: string (nullable field),
+	  Salary: string,
+	  Company: string,
+	  Job title: string,
+	  Location: string,
+	  Body: text
+      }   
+
+    ```
+
+* Response: Indication of success or failure
+
+* Response shape (JSON):
+    ```json
+    {“success”: bool}
+    ```
+
+
+
+# Get Single Review (** stretch goal)
+
+# Edit Review Detail (** stretch goal)
+
+
+# LIST REVIEWS (Company Page)
+
+* Endpoint path: /companies/<int:id>
+* Endpoint method: GET
+
+
+* Response: Returns individual company page with reviews
+
+* Response shape (JSON):
+    ```json
+{
+Company: {
+	Name: string,
+	Logo_url: string,
+	Id: int
+Reviews: [
+	{
+	  Username: string (nullable field),
+	  Salary: string,
+	  Company: string,
+	  Job title: string,
+	  Location: string,
+	  Body: text
+	}
+]
+}
+}    
+
+    ```
+
+
+
+# LIST TOP 10 REVIEWS (Carousel)
+
+* Endpoint path: /companies/<int:id>
+* Endpoint method: GET
+
+
+* Response: Returns individual company page with reviews
+
+* Response shape (JSON):
+    ```json
+{
+Company: {
+	Name: string,
+	Logo_url: string,
+	Id: int
+Reviews: [
+	{
+	  Username: string (nullable field),
+	  Salary: string,
+	  Company: string,
+	  Job title: string,
+	  Location: string,
+	  Body: text
+	}
+]
+}
+}    
+
+    ```
+
+
+
+# LIST COMPANIES
+
+* Endpoint path: /companies
+* Endpoint method: GET
+
+* Response: List all companies
+
+* Response shape (JSON):
+    ```json
+{
+Companies: [
+	{
+	Name: string,
+	Id: int,
+	Logo_url: string
+}
+]
+
+}    
+    ```
+# LIST TOP 10 COMPANIES 
+
+* Endpoint path: /companies
+* Endpoint method: GET
+
+* Response: List all companies
+
+* Response shape (JSON):
+    ```json
+{
+Companies: [
+	{
+	Name: string,
+	Id: int,
+	Logo_url: string
+}
+]
+
+}    
+    ```
+
+
+
+
+●	Log in(POST, token)/ log out(Delete Session(token)), Create user, (**optional: Update user),
+●	Create review, Retrieve review, (& top 10), Update Review, Delete review
+●	(**admin: Create company), (**admin: Delete company), Retrieve company(& its reviews) and list companies(& possible top 10 endpoint), (** admin: Update company)
