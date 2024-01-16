@@ -1,8 +1,13 @@
-# volumes:
+volumes:
+  truth-in-tech-data:
+    external: true
 services:
   fastapi:
     environment:
       CORS_HOST: http://localhost:3000
+      DATABASE_URL: postgresql://user:password01@postgres/truth_in_tech
+      WAIT_HOSTS: postgres:5432
+      PORT: 8000
     build:
       context: api
       dockerfile: Dockerfile.dev
@@ -10,7 +15,16 @@ services:
       - 8000:8000
     volumes:
       - ./api:/app
-
+  postgres:
+    image: postgres:14.2-bullseye
+    volumes:
+      - truth-in-tech-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password01
+      POSTGRES_USER: user
+      POSTGRES_DB: truth_in_tech
+    ports:
+      - "15432:5432"
   ghi:
     image: node:lts-bullseye
     command: /bin/bash run.sh
@@ -25,4 +39,3 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
-
