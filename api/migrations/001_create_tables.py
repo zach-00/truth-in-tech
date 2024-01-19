@@ -1,19 +1,18 @@
 steps =[
     [
     """
-    CREATE TABLE users(
+    CREATE TABLE accounts(
     id SERIAL PRIMARY KEY NOT NULL,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    avatar_url VARCHAR(1000) NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    email VARCHAR(50) UNIQUE NOT NULL
+    username VARCHAR(200) UNIQUE NOT NULL,
+    first_name VARCHAR(200) NOT NULL,
+    last_name VARCHAR(200) NOT NULL,
+    hashed_password VARCHAR(200) NOT NULL,
+    email VARCHAR(200) UNIQUE NOT NULL
     );
     """,
 
     """
-    DROP TABLE users;
+    DROP TABLE accounts;
     """
     ],
     [
@@ -38,7 +37,7 @@ steps =[
     job_title VARCHAR(50),
     location VARCHAR(50),
     body TEXT,
-    user_id INTEGER REFERENCES users(id),
+    account_id INTEGER REFERENCES accounts(id),
     company_id INTEGER REFERENCES companies(id)
     );
     """,
