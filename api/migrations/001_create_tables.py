@@ -1,6 +1,6 @@
-steps =[
+steps = [
     [
-    """
+        """
     CREATE TABLE accounts(
     id SERIAL PRIMARY KEY NOT NULL,
     username VARCHAR(200) UNIQUE NOT NULL,
@@ -10,26 +10,24 @@ steps =[
     email VARCHAR(200) UNIQUE NOT NULL
     );
     """,
-
-    """
+        """
     DROP TABLE accounts;
-    """
+    """,
     ],
     [
-    """
+        """
     CREATE TABLE companies(
     id SERIAL PRIMARY KEY NOT NULL,
     company_name VARCHAR(50) UNIQUE NOT NULL,
     company_logo VARCHAR(1000) NOT NULL
     );
     """,
-
-    """
+        """
     DROP TABLE companies;
-    """
+    """,
     ],
     [
-    """
+        """
     CREATE TABLE reviews(
     id SERIAL PRIMARY KEY NOT NULL,
     anonymous BOOLEAN DEFAULT FALSE,
@@ -41,9 +39,8 @@ steps =[
     company_id INTEGER REFERENCES companies(id)
     );
     """,
-
-    """
+        """
     DROP TABLE reviews;
-    """
-    ]
+    """,
+    ],
 ]
