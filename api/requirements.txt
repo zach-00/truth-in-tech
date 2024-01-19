@@ -1,4 +1,6 @@
-fastapi[all]==0.78.0
+fastapi[all]
 uvicorn[standard]==0.17.6
 pytest
 psycopg[binary,pool]==3.1.17
+bcrypt==4.0.1
+jwtdown-fastapi==0.5.0
