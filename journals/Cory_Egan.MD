@@ -13,3 +13,17 @@ As a group came up with an MVP (Minimum Viable Product) to complete during our p
 Discussed our API Endpoints and came up with a list of endpoints and JSON Response for each.
 Started to draw our database tables in Microsoft Excel.
 Drew our database tables in Excalidraw.
+
+
+1/16/24 - 1/19/24
+Learned more about “mob-style” coding which is what we primarily used this week.
+-	Updated .yaml and docker.dev files to create the database
+-	Created user, companies, and reviews tables
+-	Migrated tables and tested each table in beekeeper
+-   Added routers, pool and queries folders
+-   Added npm fund avvvatars
+-	Installed JWTdown library
+-	Create authenticator.py file
+-	Created route for ‘create user’
+-	Completed the create user endpoint
+-	Login/logout function
