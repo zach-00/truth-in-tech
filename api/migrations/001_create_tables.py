@@ -36,7 +36,8 @@ steps = [
     location VARCHAR(50),
     body TEXT,
     account_id INTEGER REFERENCES accounts(id),
-    company_id INTEGER REFERENCES companies(id)
+    company_id INTEGER REFERENCES companies(id),
+    date_created TIMESTAMP
     );
     """,
         """
