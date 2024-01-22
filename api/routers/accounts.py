@@ -85,6 +85,14 @@ async def get_token(
         }
 
 
+@router.delete("/accounts/{account_id}", response_model=bool)
+def delete_account(
+    account_id: int,
+    repo: AccountRepo = Depends(),
+) -> bool:
+    return repo.delete(account_id)
+
+
 @router.post("/accounts", response_model=AccountToken | HttpError)
 async def create_account(
     info: AccountIn,
