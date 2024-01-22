@@ -32,6 +32,62 @@ class AccountOutWithPassword(AccountOut):
 
 
 class AccountRepo:
+    def update(
+        self, account_id: int, new_info: AccountIn
+    ) -> Union[AccountOut, DuplicateAccountError]:
+        try:
+            from authenticator import (
+                authenticator,
+            )  # do this to keep from getting circular error,
+            # since we already import quaries.accounts.py into authenticator//
+
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE accounts
+                        SET username = %s,
+                            first_name = %s,
+                            last_name = %s,
+                            hashed_password = %s,
+                            email = %s
+                        WHERE id = %s
+                        RETURNING id,
+                            username,
+                            first_name,
+                            last_name,
+                            email;
+                        """,
+                        [
+                            new_info.username,
+                            new_info.first_name,
+                            new_info.last_name,
+                            authenticator.hash_password(new_info.password),
+                            new_info.email,
+                            account_id,
+                        ],
+                    )
+                    (
+                        id,
+                        username,
+                        first_name,
+                        last_name,
+                        email,
+                    ) = result.fetchone()
+                    if result:
+                        return AccountOut(
+                            id=id,
+                            username=username,
+                            first_name=first_name,
+                            last_name=last_name,
+                            email=email,
+                        )
+                    else:
+                        print(f"No account found for ID: {account_id}")
+        except Exception as e:
+            print(f"Error in update account: {e}")
+        return None
+
     def get(
         self, username: str
     ) -> Union[AccountOutWithPassword, DuplicateAccountError]:
@@ -65,6 +121,22 @@ class AccountRepo:
         except Exception as e:
             print(f"Error in get account: {e}")
             return None
+
+    def delete(self, account_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                        db.execute(
+                            """
+                            DELETE FROM accounts
+                            WHERE id = %s
+                            """,
+                            [account_id]
+                        )
+                        return True
+        except Exception as e:
+                    print(e)
+                    return False
 
     def create(
         self, info: AccountIn, hashed_password: str
@@ -116,7 +188,3 @@ class AccountRepo:
             raise DuplicateAccountError(
                 message="Cannot create an account with those credentials"
             )
-
-    # def account_in_to_out(self, id: int, info: AccountIn):
-    #     old_data = info.dict()
-    #     return AccountOutWithPassword(id=id, **old_data)

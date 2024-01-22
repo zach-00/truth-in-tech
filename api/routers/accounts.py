@@ -11,12 +11,14 @@ from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 
 from pydantic import BaseModel
+import asyncio
 
 from queries.accounts import (
     AccountIn,
     AccountOut,
     AccountRepo,
     DuplicateAccountError,
+    BaseExceptionError,
 )
 
 
@@ -36,6 +38,40 @@ class HttpError(BaseModel):
 router = APIRouter()
 
 
+@router.put(
+    "/accounts/{account_id}", response_model=AccountOut | HttpError
+)
+async def update_account(
+    account_id: int,
+    new_info: AccountIn,
+    repo: AccountRepo = Depends(),
+):
+    try:
+        updated_account = repo.update(
+            account_id, new_info
+        )  # cannot await repo.update directly becuse its not
+
+        if asyncio.iscoroutine(
+            updated_account
+        ):  # checks if updated_account is coroutine using asyncio.iscoroutine
+            updated_account = (
+                await updated_account
+            )  # awaits when if statement comes back true
+
+        if updated_account:
+            return updated_account
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Account not found",
+            )
+    except BaseExceptionError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=e.message,
+        )
+
+
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
@@ -47,6 +83,14 @@ async def get_token(
             "type": "Bearer",
             "account": account,
         }
+
+
+@router.delete("/accounts/{account_id}", response_model=bool)
+def delete_account(
+    account_id: int,
+    repo: AccountRepo = Depends(),
+) -> bool:
+    return repo.delete(account_id)
 
 
 @router.post("/accounts", response_model=AccountToken | HttpError)
