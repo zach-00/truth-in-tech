@@ -38,9 +38,7 @@ class HttpError(BaseModel):
 router = APIRouter()
 
 
-@router.put(
-    "/accounts/{account_id}", response_model=AccountOut | HttpError
-)
+@router.put("/accounts/{account_id}", response_model=AccountOut | HttpError)
 async def update_account(
     account_id: int,
     new_info: AccountIn,
