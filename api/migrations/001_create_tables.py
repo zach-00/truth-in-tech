@@ -37,7 +37,7 @@ steps = [
     body TEXT,
     account_id INTEGER REFERENCES accounts(id),
     company_id INTEGER REFERENCES companies(id),
-    date_created TIMESTAMP
+    date_created TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP
     );
     """,
         """
