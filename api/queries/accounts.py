@@ -39,6 +39,7 @@ class AccountRepo:
             from authenticator import (
                 authenticator,
             )  # do this to keep from getting circular error,
+
             # since we already import quaries.accounts.py into authenticator//
 
             with pool.connection() as conn:
@@ -126,17 +127,17 @@ class AccountRepo:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                        db.execute(
-                            """
+                    db.execute(
+                        """
                             DELETE FROM accounts
                             WHERE id = %s
                             """,
-                            [account_id]
-                        )
-                        return True
+                        [account_id],
+                    )
+                    return True
         except Exception as e:
-                    print(e)
-                    return False
+            print(e)
+            return False
 
     def create(
         self, info: AccountIn, hashed_password: str
