@@ -13,6 +13,15 @@ from authenticator import authenticator
 router = APIRouter()
 
 
+@router.get("/companies/{company_id}", response_model=Union[CompanyOut, Error])
+def get_one_company(
+    company_id: int,
+    response: Response,
+    repo: CompanyRepo = Depends(),
+):
+    return repo.get_one_company(company_id)
+
+
 @router.get("/companies", response_model=Union[CompaniesOut, Error])
 def get_companies(repo: CompanyRepo = Depends()):
     return {"companies": repo.get_companies()}
