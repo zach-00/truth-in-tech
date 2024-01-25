@@ -15,6 +15,10 @@ class CompanyOut(BaseModel):
     company_logo: str
 
 
+class CompanyOutWithReviewCount(CompanyOut):
+    number_of_reviews: int
+
+
 class CompaniesOut(BaseModel):
     companies: list[CompanyOut]
 
@@ -24,6 +28,37 @@ class Error(BaseModel):
 
 
 class CompanyRepo:
+    def get_top_10_companies(
+        self,
+    ) -> Union[List[CompanyOutWithReviewCount], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT c.id, c.company_name,
+                            COUNT(r.id) as number_of_reviews
+                        FROM companies c
+                        LEFT JOIN reviews r ON c.id = r.company_id
+                        GROUP BY c.id
+                        ORDER BY COUNT(r.id) DESC
+                        LIMIT 10;
+                        """,
+                    )
+                    companies = result.fetchall()
+                    companies_list = []
+                    for record in companies:
+                        company = CompanyOutWithReviewCount(
+                            id=record[0],
+                            company_name=record[1],
+                            company_logo="",  # Adjust this field accordingly
+                            number_of_reviews=record[2],  # New field
+                        )
+                        companies_list.append(company)
+            return companies_list
+        except Exception as e:
+            return [{"message": f"Unable to retrieve top 10 companies - {e}"}]
+
     def delete(self, company_id: int) -> bool:
         try:
             with pool.connection() as conn:
