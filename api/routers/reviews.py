@@ -45,3 +45,12 @@ async def update_review(
     account_info: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.update_review(review_id, review, account_info["id"])
+
+
+@router.delete("/reviews/{review_id}")
+def delete_review(
+    review_id,
+    account_info: dict = Depends(authenticator.get_current_account_data),
+    repo: ReviewRepository = Depends(),
+):
+    return repo.delete_review(review_id, account_info["id"])

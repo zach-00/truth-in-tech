@@ -128,7 +128,7 @@ class ReviewRepository:
         except Exception as e:
             raise HTTPException(
                 status_code=400,
-                detail=e.args,
+                detail=str(e),
             )
 
     def get_all(self, company_id: int) -> Union[List[ReviewOut], dict]:
@@ -178,7 +178,7 @@ class ReviewRepository:
         except Exception as e:
             raise HTTPException(
                 status_code=400,
-                detail=e.args,
+                detail=str(e),
             )
 
     def update_review(
@@ -244,3 +244,23 @@ class ReviewRepository:
                 status_code=400,
                 detail=str(e),
             )
+
+    def delete_review(self, review_id: int, account_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        DELETE FROM reviews
+                        WHERE id = %s
+                        AND account_id = %s
+                        RETURNING id;
+                        """,
+                        [review_id, account_id],
+                    )
+
+                    if result.fetchone()[0]:
+                        return True
+
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))

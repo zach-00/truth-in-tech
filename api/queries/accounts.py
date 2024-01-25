@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from pydantic import BaseModel
 from queries.pool import pool
 from typing import Union
@@ -83,11 +84,8 @@ class AccountRepo:
                             last_name=last_name,
                             email=email,
                         )
-                    else:
-                        print(f"No account found for ID: {account_id}")
         except Exception as e:
-            print(f"Error in update account: {e}")
-        return None
+            raise HTTPException(status_code=400, detail=str(e))
 
     def get(
         self, username: str
@@ -101,7 +99,6 @@ class AccountRepo:
                     )
                     result = db.fetchone()
                     if result:
-                        print(result)
                         if len(result) == 6:
                             (
                                 id,
@@ -120,24 +117,24 @@ class AccountRepo:
                                 email=email,
                             )
         except Exception as e:
-            print(f"Error in get account: {e}")
-            return None
+            raise HTTPException(status_code=400, detail=str(e))
 
     def delete(self, account_id: int) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    result = db.execute(
                         """
                             DELETE FROM accounts
                             WHERE id = %s
+                            RETURNING id;
                             """,
                         [account_id],
                     )
-                    return True
+                    if result.fetchone()[0]:
+                        return True
         except Exception as e:
-            print(e)
-            return False
+            raise HTTPException(status_code=400, detail=str(e))
 
     def create(
         self, info: AccountIn, hashed_password: str
@@ -184,8 +181,7 @@ class AccountRepo:
                         last_name=last_name,
                         hashed_password=hashed_password,
                     )
-        except Exception as e:
-            print(f"Error in create account: {e}")
+        except Exception:
             raise DuplicateAccountError(
                 message="Cannot create an account with those credentials"
             )
