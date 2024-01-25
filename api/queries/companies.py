@@ -24,6 +24,22 @@ class Error(BaseModel):
 
 
 class CompanyRepo:
+    def delete(self, company_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                            DELETE FROM companies
+                            WHERE id = %s
+                            """,
+                        [company_id],
+                    )
+                    return True
+        except Exception as e:
+            print(f"Error in delete company: {e}")
+            return False
+
     def get_one_company(self, company_id: int) -> Union[CompanyOut, Error]:
         try:
             with pool.connection() as conn:
