@@ -57,7 +57,10 @@ class CompanyRepo:
                         companies_list.append(company)
             return companies_list
         except Exception as e:
-            return [{"message": f"Unable to retrieve top 10 companies - {e}"}]
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
 
     def delete(self, company_id: int) -> bool:
         try:
@@ -150,6 +153,38 @@ class CompanyRepo:
             raise HTTPException(
                 status_code=400,
                 detail=e.args,
+            )
+
+    def update_company(
+        self, company_id: int, company: CompanyIn
+    ) -> Union[CompanyOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE companies
+                        SET company_name = %s, company_logo = %s
+                        WHERE id = %s
+                        RETURNING id, company_name, company_logo;
+                        """,
+                        [
+                            company.company_name,
+                            company.company_logo,
+                            company_id,
+                        ],
+                    )
+                    record = result.fetchone()
+                    updated = CompanyOut(
+                        id=record[0],
+                        company_name=record[1],
+                        company_logo=record[2],
+                    )
+                    return updated
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
             )
 
     def company_in_to_out(self, id: int, company: CompanyIn):

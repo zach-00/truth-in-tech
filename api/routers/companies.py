@@ -50,3 +50,16 @@ async def create_company(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.create(company)
+
+
+@router.put(
+    "/companies/update/{company_id}", response_model=Union[CompanyOut, Error]
+)
+def update_company(
+    company_id: int,
+    company: CompanyIn,
+    response: Response,
+    repo: CompanyRepo = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    return repo.update_company(company_id, company)
