@@ -5,18 +5,25 @@ from queries.companies import (
     CompanyOut,
     Error,
     CompanyIn,
+    CompanyOutWithReviewCount,
 )
-from typing import Union
+from typing import Union, List
 from authenticator import authenticator
 
 
 router = APIRouter()
 
 
+@router.get("/companies/top10", response_model=List[CompanyOutWithReviewCount])
+def get_top_10_companies(repo: CompanyRepo = Depends()):
+    return repo.get_top_10_companies()
+
+
 @router.delete("/companies/{company_id}", response_model=bool)
-def delete_company(
+async def delete_company(
     company_id: int,
     repo: CompanyRepo = Depends(),
+    company_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
     return repo.delete(company_id)
 
