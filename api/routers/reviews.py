@@ -38,7 +38,7 @@ def get_company_reviews(
 
 
 @router.put("/reviews/{review_id}", response_model=Union[ReviewOut, Error])
-def update_review(
+async def update_review(
     review_id: int,
     review: ReviewInUpdate,
     repo: ReviewRepository = Depends(),
