@@ -27,3 +27,21 @@ Learned more about “mob-style” coding which is what we primarily used this w
 -	Created route for ‘create user’
 -	Completed the create user endpoint
 -	Login/logout function
+
+
+1/22/24 - 1/26/24
+Team completed the majority of the backend the week. All of the following endpoints were test with fastAPI
+swagger. All team members merged their work to main and are working with all the updates form the week.
+- Completed the create user endpoint
+- Login/logout function
+- Completed updateUser endpoint
+- Completed deleteUser endpoint
+- Get list of reviews by company – endpoint
+- Create review – endpoint
+- Delete a company – endpoint
+- Get a company -endpoint
+- Update a review - endpoint
+- Update company - endpoint
+- Delete a review - endpoint
+- Get top 10 companies - endpoint
+- Get a review – endpoint
