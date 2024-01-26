@@ -83,12 +83,20 @@ async def get_token(
         }
 
 
-@router.delete("/accounts/{account_id}", response_model=bool)
-def delete_account(
-    account_id: int,
+@router.delete("/accounts", response_model=bool | HttpError)
+async def delete_account(
+    request: Request,
+    response: Response,
+    session_getter=Depends(authenticator.get_session_getter),
+    jwt: dict = Depends(authenticator._try_jwt),
+    account_info: dict = Depends(authenticator.try_get_current_account_data),
     repo: AccountRepo = Depends(),
 ) -> bool:
-    return repo.delete(account_id)
+    try:
+        await authenticator.logout(request, response, session_getter, jwt)
+        return repo.delete(account_info["id"])
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.post("/accounts", response_model=AccountToken | HttpError)
