@@ -66,17 +66,18 @@ class CompanyRepo:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    result = db.execute(
                         """
                             DELETE FROM companies
                             WHERE id = %s
+                            RETURNING id;
                             """,
                         [company_id],
                     )
-                    return True
+                    if result.fetchone()[0]:
+                        return True
         except Exception as e:
-            print(f"Error in delete company: {e}")
-            return False
+            raise HTTPException(status_code=400, detail=str(e))
 
     def get_one_company(self, company_id: int) -> Union[CompanyOut, Error]:
         try:
@@ -126,9 +127,11 @@ class CompanyRepo:
                         companies_list.append(company)
 
             return companies_list
-
-        except Exception:
-            return {"message": "Unable to retrieve all companies"}
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
 
     def create(self, company: CompanyIn) -> Union[CompanyOut, Error]:
         try:
@@ -152,7 +155,7 @@ class CompanyRepo:
         except Exception as e:
             raise HTTPException(
                 status_code=400,
-                detail=e.args,
+                detail=str(e),
             )
 
     def update_company(

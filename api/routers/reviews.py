@@ -27,6 +27,14 @@ async def create_review(
     return result
 
 
+@router.get("/reviews/{review_id}", response_model=ReviewOut)
+def get_one_review(
+    review_id: int,
+    repo: ReviewRepository = Depends(),
+):
+    return repo.get_one_review(review_id)
+
+
 @router.get(
     "/reviews/{company_id}", response_model=Union[List[ReviewOut], None]
 )
@@ -45,3 +53,12 @@ async def update_review(
     account_info: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.update_review(review_id, review, account_info["id"])
+
+
+@router.delete("/reviews/{review_id}")
+def delete_review(
+    review_id,
+    account_info: dict = Depends(authenticator.get_current_account_data),
+    repo: ReviewRepository = Depends(),
+):
+    return repo.delete_review(review_id, account_info["id"])
