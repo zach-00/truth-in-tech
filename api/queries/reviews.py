@@ -131,6 +131,54 @@ class ReviewRepository:
                 detail=str(e),
             )
 
+    def get_one_review(self, review_id: int) -> ReviewOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id,
+                            anonymous,
+                            salary,
+                            job_title,
+                            location,
+                            body,
+                            account_id,
+                            company_id,
+                            date_created
+                        FROM reviews
+                        WHERE id = %s
+                        """,
+                        [review_id],
+                    )
+                    (
+                        id,
+                        anonymous,
+                        salary,
+                        job_title,
+                        location,
+                        body,
+                        account_id,
+                        company_id,
+                        date_created,
+                    ) = result.fetchone()
+                    return ReviewOut(
+                        id=id,
+                        anonymous=anonymous,
+                        salary=salary,
+                        job_title=job_title,
+                        location=location,
+                        body=body,
+                        account_id=account_id,
+                        company_id=company_id,
+                        date_created=date_created,
+                    )
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
+
     def get_all(self, company_id: int) -> Union[List[ReviewOut], dict]:
         try:
             with pool.connection() as conn:

@@ -27,6 +27,14 @@ async def create_review(
     return result
 
 
+@router.get("/reviews/{review_id}", response_model=ReviewOut)
+def get_one_review(
+    review_id: int,
+    repo: ReviewRepository = Depends(),
+):
+    return repo.get_one_review(review_id)
+
+
 @router.get(
     "/reviews/{company_id}", response_model=Union[List[ReviewOut], None]
 )
