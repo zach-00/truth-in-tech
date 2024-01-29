@@ -14,9 +14,11 @@ class FakeReviewRepo:
             "company_id": 1,
             "date_created": "2024-01-28",
         }
-
         result.update(review)
         return result
+
+    def get_all(self, int):
+        return []
 
 
 def fake_get_current_account_data():
@@ -65,3 +67,16 @@ def test_update_review():
     # Assert
     assert response.status_code == 200
     assert response.json() == expected
+
+
+def test_get_reviews():
+    # Arrange
+    app.dependency_overrides[ReviewRepository] = FakeReviewRepo
+
+    # Act
+    response = client.get("/reviews/companies/1")
+    app.dependency_overrides = {}
+
+    # Assert
+    assert response.status_code == 200
+    assert response.json() == []
