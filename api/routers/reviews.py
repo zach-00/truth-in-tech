@@ -36,7 +36,8 @@ def get_one_review(
 
 
 @router.get(
-    "/reviews/{company_id}", response_model=Union[List[ReviewOut], None]
+    "/reviews/companies/{company_id}",
+    response_model=Union[List[ReviewOut], None],
 )
 def get_company_reviews(
     company_id: int,
