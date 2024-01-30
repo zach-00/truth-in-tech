@@ -23,6 +23,13 @@ app.include_router(reviews.router)
 app.include_router(companies.router)
 
 
+@app.get("/")
+def root():
+    return {
+        "message": "You hit the root path!"
+        }
+
+
 @app.get("/api/launch-details")
 def launch_details():
     return {
