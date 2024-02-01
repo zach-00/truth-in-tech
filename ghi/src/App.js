@@ -3,6 +3,7 @@ import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
 import LoginForm from "./login.js";
 import CreateCompanyForm from "./CreateCompany.js";
+import CreateReview from "./CreateReview.js";
 
 function App() {
   const basename=process.env.PUBLIC_HOST
@@ -12,13 +13,18 @@ function App() {
     <div className="container">
       <AuthProvider baseUrl={baseUrl}>
 
-        <Routes>
-          <Route path="login" element={<LoginForm />} />
-          {/* <Route path="/reviews"></Route> */}
-          <Route path="companies">
-            <Route path="create" element={<CreateCompanyForm/>}/>
-          </Route>
-        </Routes>
+      <Routes>
+        <Route path="login" element={<LoginForm />} />
+
+        <Route path="companies">
+          <Route path="create" element={<CreateCompanyForm/>}/>
+        </Route>
+
+        <Route path="reviews">
+          <Route path="create" element={<CreateReview />} />
+        </Route>
+
+      </Routes>
 
       </AuthProvider>
     </div>
