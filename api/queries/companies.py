@@ -111,7 +111,8 @@ class CompanyRepo:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT * FROM companies;
+                        SELECT * FROM companies
+                        ORDER BY company_name;
                         """,
                     )
 
