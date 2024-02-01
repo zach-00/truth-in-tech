@@ -5,6 +5,7 @@ import LoginForm from "./login.js";
 import CreateCompanyForm from "./CreateCompany.js";
 import CreateReview from "./CreateReview.js";
 import CompaniesList from "./CompaniesList.js";
+import MainPage from "./MainPage.js";
 
 function App() {
   const basename=process.env.PUBLIC_HOST
@@ -15,7 +16,11 @@ function App() {
       <AuthProvider baseUrl={baseUrl}>
 
       <Routes>
-        <Route index element={<LoginForm />} />
+        <Route index element={<MainPage />} />
+
+        <Route path="login" element={<LoginForm />} />
+
+
         <Route path="companies">
           <Route path="create" element={<CreateCompanyForm/>}/>
           <Route path="list" element={<CompaniesList />} />
