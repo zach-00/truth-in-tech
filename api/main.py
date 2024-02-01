@@ -25,9 +25,7 @@ app.include_router(companies.router)
 
 @app.get("/")
 def root():
-    return {
-        "message": "You hit the root path!"
-        }
+    return {"message": "You hit the root path!"}
 
 
 @app.get("/api/launch-details")

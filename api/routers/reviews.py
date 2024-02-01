@@ -8,6 +8,8 @@ from queries.reviews import (
     ReviewIn,
     ReviewInUpdate,
     ReviewOut,
+    ReviewOutPlus,
+    ReviewOut10,
     ReviewRepository,
     Error,
 )
@@ -36,14 +38,18 @@ def get_one_review(
 
 
 @router.get(
-    "/reviews/companies/{company_id}",
-    response_model=Union[List[ReviewOut], None],
+    "/reviews/companies/{company_id}", response_model=List[ReviewOutPlus]
 )
 def get_company_reviews(
     company_id: int,
     repo: ReviewRepository = Depends(),
 ):
     return repo.get_all(company_id)
+
+
+@router.get("/reviews/top10/", response_model=List[ReviewOut10])
+def get_top_10_reviews(repo: ReviewRepository = Depends()):
+    return repo.get_top_10_reviews()
 
 
 @router.put("/reviews/{review_id}", response_model=Union[ReviewOut, Error])

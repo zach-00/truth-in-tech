@@ -8,6 +8,17 @@ const LoginForm = () => {
   const { login } = useToken();
 
 
+    const handleUsernameChange = (event) => {
+      const value = event.target.value;
+      setUsername(value);
+    }
+
+    const handlePasswordChange = (event) => {
+      const value = event.target.value;
+      setPassword(value);
+    }
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +47,7 @@ const LoginForm = () => {
               name="username"
               type="text"
               className="form-control"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleUsernameChange}
             />
           </div>
           <div className="mb-3">
@@ -45,7 +56,7 @@ const LoginForm = () => {
               name="password"
               type="password"
               className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
             />
           </div>
           <div>

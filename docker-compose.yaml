@@ -38,5 +38,5 @@ services:
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"
-      PUBLIC_URL: http://localhost:3000
+      PUBLIC_URL: ${PUBLIC_HOST}
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}

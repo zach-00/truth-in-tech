@@ -55,6 +55,18 @@ class ReviewOut(BaseModel):
     date_created: date
 
 
+class ReviewOut10(BaseModel):
+    id: int
+    salary: float
+    job_title: str
+    location: Optional[str]
+    body: str
+    username: str
+    company_name: str
+    company_logo: str
+    date_created: date
+
+
 class ReviewRepository:
     def create(self, review: ReviewIn, account_id: int) -> ReviewOut:
         try:
@@ -179,7 +191,7 @@ class ReviewRepository:
                 detail=str(e),
             )
 
-    def get_all(self, company_id: int) -> Union[List[ReviewOut], dict]:
+    def get_all(self, company_id: int) -> Union[List[ReviewOutPlus], dict]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -223,6 +235,38 @@ class ReviewRepository:
                         )
                         reviews.append(r)
                     return reviews
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
+
+    def get_top_10_reviews(self) -> Union[List[ReviewOut10], None]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT * FROM top_ten;
+                        """,
+                    )
+                    reviews = result.fetchall()
+                    print(reviews)
+                    top_10_list = []
+                    for i in reviews:
+                        review = ReviewOut10(
+                            id=i[0],
+                            salary=i[1],
+                            job_title=i[2],
+                            location=i[3],
+                            body=i[4],
+                            username=i[5],
+                            company_name=i[6],
+                            company_logo=i[7],
+                            date_created=i[8],
+                        )
+                        top_10_list.append(review)
+                    return top_10_list
         except Exception as e:
             raise HTTPException(
                 status_code=400,
