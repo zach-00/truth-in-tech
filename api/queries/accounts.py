@@ -21,6 +21,13 @@ class AccountIn(BaseModel):
     email: str
 
 
+class PersonalAccountIn(BaseModel):
+    username: str
+    first_name: str
+    last_name: str
+    email: str
+
+
 class AccountOut(BaseModel):
     id: int
     username: str
@@ -28,21 +35,60 @@ class AccountOut(BaseModel):
     last_name: str
 
 
+class PersonalAccountOut(BaseModel):
+    id: int
+    username: str
+    first_name: str
+    last_name: str
+    email: str
+
+
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
 class AccountRepo:
-    def update(
-        self, account_id: int, new_info: AccountIn
-    ) -> Union[AccountOut, DuplicateAccountError]:
+    def get_account(
+        self, account_id: int
+    ) -> Union[PersonalAccountOut, DuplicateAccountError]:
         try:
-            from authenticator import (
-                authenticator,
-            )  # do this to keep from getting circular error,
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id,
+                            username,
+                            first_name,
+                            last_name,
+                            email
+                        FROM accounts
+                        WHERE id = %s
+                        """,
+                        [account_id],
+                    )
+                    (
+                        id,
+                        username,
+                        first_name,
+                        last_name,
+                        email,
+                    ) = result.fetchone()
+                    if result:
+                        account_data = PersonalAccountOut(
+                            id=id,
+                            username=username,
+                            first_name=first_name,
+                            last_name=last_name,
+                            email=email,
+                        )
+                        return account_data
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
 
-            # since we already import quaries.accounts.py into authenticator//
-
+    def update(
+        self, account_id: int, new_info: PersonalAccountIn
+    ) -> Union[PersonalAccountOut, DuplicateAccountError]:
+        try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
@@ -51,7 +97,6 @@ class AccountRepo:
                         SET username = %s,
                             first_name = %s,
                             last_name = %s,
-                            hashed_password = %s,
                             email = %s
                         WHERE id = %s
                         RETURNING id,
@@ -64,7 +109,6 @@ class AccountRepo:
                             new_info.username,
                             new_info.first_name,
                             new_info.last_name,
-                            authenticator.hash_password(new_info.password),
                             new_info.email,
                             account_id,
                         ],
@@ -77,7 +121,7 @@ class AccountRepo:
                         email,
                     ) = result.fetchone()
                     if result:
-                        return AccountOut(
+                        return PersonalAccountOut(
                             id=id,
                             username=username,
                             first_name=first_name,

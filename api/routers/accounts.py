@@ -19,6 +19,8 @@ from queries.accounts import (
     AccountRepo,
     DuplicateAccountError,
     BaseExceptionError,
+    PersonalAccountOut,
+    PersonalAccountIn,
 )
 
 
@@ -38,23 +40,31 @@ class HttpError(BaseModel):
 router = APIRouter()
 
 
-@router.put("/accounts/{account_id}", response_model=AccountOut | HttpError)
-async def update_account(
-    account_id: int,
-    new_info: AccountIn,
+@router.get("/accounts/", response_model=PersonalAccountOut | HttpError)
+async def get_account(
     repo: AccountRepo = Depends(),
+    account_info: dict = Depends(authenticator.get_current_account_data),
 ):
     try:
-        updated_account = repo.update(
-            account_id, new_info
-        )  # cannot await repo.update directly becuse its not
+        return repo.get_account(account_info["id"])
+    except BaseExceptionError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=e.message,
+        )
 
-        if asyncio.iscoroutine(
-            updated_account
-        ):  # checks if updated_account is coroutine using asyncio.iscoroutine
-            updated_account = (
-                await updated_account
-            )  # awaits when if statement comes back true
+
+@router.put("/accounts/", response_model=PersonalAccountOut | HttpError)
+async def update_account(
+    new_info: PersonalAccountIn,
+    repo: AccountRepo = Depends(),
+    account_info: dict = Depends(authenticator.try_get_current_account_data),
+):
+    try:
+        updated_account = repo.update(account_info["id"], new_info)
+
+        if asyncio.iscoroutine(updated_account):
+            updated_account = await updated_account
 
         if updated_account:
             return updated_account
@@ -83,7 +93,7 @@ async def get_token(
         }
 
 
-@router.delete("/accounts", response_model=bool | HttpError)
+@router.delete("/accounts/", response_model=bool | HttpError)
 async def delete_account(
     request: Request,
     response: Response,

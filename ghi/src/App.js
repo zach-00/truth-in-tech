@@ -3,6 +3,7 @@ import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
 import LoginForm from "./login.js";
 import CreateCompanyForm from "./CreateCompany.js";
+import UpdateAccountForm from "./AccountPage.js";
 import CreateReview from "./CreateReview.js";
 import CompaniesList from "./CompaniesList.js";
 import CreateAccount from "./CreateAccount.js";
@@ -18,12 +19,12 @@ function App() {
             <Route index element={<LoginForm />} />
             <Route path="accounts">
               <Route path="create" element={<CreateAccount />} />
+              <Route path="update" element={<UpdateAccountForm/>}/>
             </Route>
             <Route path="companies">
               <Route path="create" element={<CreateCompanyForm />} />
               <Route path="list" element={<CompaniesList />} />
             </Route>
-
             <Route path="reviews">
               <Route path="create" element={<CreateReview />} />
             </Route>
