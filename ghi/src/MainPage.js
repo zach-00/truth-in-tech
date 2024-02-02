@@ -17,7 +17,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 function MainPage() {
 
     const [ companies, setCompanies ] = useState([]);
-    const [ company, setCompany ] = useState('');
     const [ reviews, setReviews ] = useState([]);
     const [show, setShow] = useState(false);
 
@@ -38,7 +37,7 @@ function MainPage() {
     }
 
     const fetchReviews = async () => {
-        const url = `${process.env.REACT_APP_API_HOST}/reviews/top10`;
+        const url = `${process.env.REACT_APP_API_HOST}/reviews/top10/`;
 
         const response = await fetch(url);
         if (response.ok) {
@@ -48,18 +47,18 @@ function MainPage() {
     }
 
     const handleCompanyClick = (e) => {
-        navigate(e.target.value);
+        navigate(`reviews/companies/${e.target.value}`);
+    }
+
+    const handleWriteReviewClick = (e) => {
+        navigate('reviews/create');
     }
 
     useEffect(() => {
         fetchCompanies();
+        fetchReviews();
     }, []);
 
-    const options = {
-        name: 'Enable both scrolling & backdrop',
-        scroll: true,
-        backdrop: true,
-  }
 
     return (
         <>
@@ -102,7 +101,7 @@ function MainPage() {
                         </>
 
                         <>
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 padding-top">
                             <Button variant="outline-primary" onClick={toggleShow} size="lg">
                                 10 Most Reviewed Companies
                             </Button>
@@ -141,7 +140,7 @@ function MainPage() {
                                 Leave a review of your employer
                                 or your job at that company
                                 </Card.Text>
-                                <Button variant="outline-primary">Write a Review</Button>
+                                <Button onClick={handleWriteReviewClick} variant="outline-primary">Write a Review</Button>
                             </Card.Body>
                         </Card>
                         <Placeholder xs={12} />

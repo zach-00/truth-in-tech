@@ -22,3 +22,7 @@ code {
 .padding {
   padding-block: 3rem;
 }
+
+.padding-top {
+  padding-top: 1rem;
+}
