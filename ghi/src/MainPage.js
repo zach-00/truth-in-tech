@@ -1,10 +1,30 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Placeholder from 'react-bootstrap/Placeholder';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 function MainPage() {
 
     const [ companies, setCompanies ] = useState([]);
     const [ company, setCompany ] = useState('');
+    const [ reviews, setReviews ] = useState([]);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const toggleShow = () => setShow((s) => !s);
+
+    const navigate = useNavigate();
 
 
     const fetchCompanies = async () => {
@@ -17,113 +37,127 @@ function MainPage() {
         }
     }
 
+    const fetchReviews = async () => {
+        const url = `${process.env.REACT_APP_API_HOST}/reviews/top10`;
+
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            setReviews(data);
+        }
+    }
+
+    const handleCompanyClick = (e) => {
+        navigate(e.target.value);
+    }
+
     useEffect(() => {
         fetchCompanies();
     }, []);
 
+    const options = {
+        name: 'Enable both scrolling & backdrop',
+        scroll: true,
+        backdrop: true,
+  }
 
     return (
         <>
-        <h1 className="display-1 text-center">Truth-In-Tech</h1>
+        <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="light">
+        <Container>
+            <Navbar.Brand href="#home">Truth-In-Tech</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+                <Nav.Link href="#features">Features</Nav.Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                    Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                    Separated link
+                </NavDropdown.Item>
+                </NavDropdown>
+            </Nav>
+            <Nav>
+                <Nav.Link href="#deets">More deets</Nav.Link>
+                <Nav.Link eventKey={2} href="#memes">
+                Dank memes
+                </Nav.Link>
+            </Nav>
+            </Navbar.Collapse>
+        </Container>
+    </Navbar>
+        <h1 className="text-center title">Truth-In-Tech</h1>
+            <Container>
+                <Row>
+                    <Col className="padding" xs={6} md={4}>
+                        <>
+                            <Placeholder xs={6} />
+                            <Placeholder className="w-75" /> <Placeholder style={{ width: '25%' }} />
+                        </>
 
-
-
-
-
-        <div className="container-fluid text-center g-0">
-            <div className="row">
-                <div className="col">
-
-                    <span className="placeholder col-12"></span>
-                    <span className="placeholder col-12 bg-primary"></span>
-                    <span className="placeholder col-12 bg-secondary"></span>
-                    <span className="placeholder col-12 bg-success"></span>
-                    <span className="placeholder col-12 bg-danger"></span>
-                    <span className="placeholder col-12 bg-warning"></span>
-                    <span className="placeholder col-12 bg-info"></span>
-                    <span className="placeholder col-12 bg-light"></span>
-                    <span className="placeholder col-12 bg-dark"></span>
-                    <div className="d-grid gap-2 col mx-auto">
-
-
-                    <span className="placeholder col-6"></span>
-                    <span className="placeholder w-75"></span>
-
-
-
-                        <button className="btn btn-outline-primary"
-                        type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasWithBothOptions"
-                        aria-controls="offcanvasWithBothOptions"
-                        >
-                            10 Most Reviewed Companies
-                            </button>
-                    </div>
-                </div>
-                <div className="col-6">
-                Column
-                </div>
-                <div className="col">
-                    <div className="card">
-                        <img src="background.png" className="card-img-top" />
-                        <div className="card-body">
-                            <h5 className="card-title">Share your experience!</h5>
-                            <p className="card-text">Review your current or former company and job</p>
-                            <Link to="#" className="btn btn-primary">Write a Review</Link>
+                        <>
+                        <div className="d-grid gap-2">
+                            <Button variant="outline-primary" onClick={toggleShow} size="lg">
+                                10 Most Reviewed Companies
+                            </Button>
                         </div>
-                    </div>
 
 
-                </div>
-            </div>
-        </div>
+                        <Offcanvas show={show} onHide={handleClose}>
+                            <Offcanvas.Header closeButton>
+                            <Offcanvas.Title><h3>10 Most Reviewed Companies</h3></Offcanvas.Title>
+                            </Offcanvas.Header>
+                            <Offcanvas.Body>
+                            {companies.map((company, index) => {
+                                return (
+                                    <ListGroup key={index}>
+                                        <ListGroup.Item onClick={handleCompanyClick} key={company.id} value={company.id} action variant="primary">{company.company_name}</ListGroup.Item>
+                                    </ListGroup>
+                                    );
+                                })}
 
+                            Some text as placeholder. In real life you can have the elements you
+                            have chosen. Like, text, images, lists, etc.
+                            </Offcanvas.Body>
+                        </Offcanvas>
+                        </>
 
-
-
-
-
-
-
-
-
-
-        <div className="offcanvas offcanvas-start"
-            data-bs-scroll="true"
-            tabIndex="-1"
-            id="offcanvasWithBothOptions"
-            aria-labelledby="offcanvasWithBothOptionsLabel">
-                <div className="offcanvas-header">
-                    <h4 className="offcanvas-title"
-                    id="offcanvasWithBothOptionsLabel"
-                    >
-                    Most Reviewed Companies
-                    </h4>
-                    <button type="button"
-                    className="btn-close"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-                </div>
-            <div className="offcanvas-body">
-                <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
-                    {companies.map(company => {
-                        return (
-                            <button key={company.id} type="button" className="btn btn-outline-danger mb-1"><h3>{company.company_name}</h3></button>
-                            );
-                        })}
-                </div>
-
-            </div>
-        </div>
-</>
+                    </Col>
+                    <Col className="padding" xs={6} md={4}>
+                        <Image src="holder.js/171x180" roundedCircle />
+                    </Col>
+                    <Col className="padding" xs={6} md={4}>
+                        <Card border="primary" style={{ width: '25rem' }}>
+                            <Card.Img variant="top" src="Truth-In-Tech-Logo.png" />
+                            <Card.Body>
+                                <Card.Title>Share your experience!</Card.Title>
+                                <Card.Text>
+                                Leave a review of your employer
+                                or your job at that company
+                                </Card.Text>
+                                <Button variant="outline-primary">Write a Review</Button>
+                            </Card.Body>
+                        </Card>
+                        <Placeholder xs={12} />
+                        <Placeholder xs={12} bg="primary" />
+                        <Placeholder xs={10} bg="secondary" />
+                        <Placeholder xs={8} bg="success" />
+                        <Placeholder xs={12} bg="danger" />
+                        <Placeholder xs={12} bg="warning" />
+                        <Placeholder xs={11} bg="info" />
+                        <Placeholder xs={12} bg="light" />
+                        <Placeholder xs={12} bg="dark" />
+                    </Col>
+                </Row>
+            </Container>
+        </>
     );
 }
 
 export default MainPage;
-
-
-
-
-<div className="btn-group-vertical" role="group" aria-label="Vertical button group">
-  <button type="button" className="btn btn-primary">Button</button>
-</div>
