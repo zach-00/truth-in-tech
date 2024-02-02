@@ -47,7 +47,7 @@ function MainPage() {
     }
 
     const handleCompanyClick = (e) => {
-        navigate(`reviews/companies/${e.target.value}`);
+        navigate(`reviews/${e.target.value}`);
     }
 
     const handleWriteReviewClick = (e) => {
