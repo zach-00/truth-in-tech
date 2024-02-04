@@ -118,7 +118,7 @@ function MainPage() {
         </Container>
     </Navbar>
         <h1 className="text-center title">Truth-In-Tech</h1>
-            <Container fluid="md">
+            <Container>
                 <Row>
                     {/* These outer columns had xs={6} md={4}, removed them to widen middle column */}
                     <Col className="padding">
@@ -147,9 +147,9 @@ function MainPage() {
                                     </ListGroup>
                                     );
                                 })}
-
-                            Some text as placeholder. In real life you can have the elements you
-                            have chosen. Like, text, images, lists, etc.
+                            <br></br>
+                            This list stays up to date with our most reviewed companies.
+                            Click a company to be navigated to their list of reviews.
                             </Offcanvas.Body>
                         </Offcanvas>
                         </>
@@ -203,7 +203,7 @@ function MainPage() {
 
                         {/* These outer columns had xs={6} md={4}, removed them to widen middle column */}
                     <Col className="padding">
-                        <Card border="primary" style={{ width: '25rem' }}>
+                        <Card border="primary" style={{ width: '20rem' }}>
                             <Card.Img variant="top" src="Truth-In-Tech-Logo.png" />
                             <Card.Body>
                                 <Card.Title>Share your experience!</Card.Title>
