@@ -44,3 +44,29 @@ swagger. All team members merged their work to main and are working with all the
 - Delete a review - endpoint
 - Get top 10 companies - endpoint
 - Get a review – endpoint
+
+
+1/26/24 - 2/1/24
+We worked on array of different issues this week.  Completing our backend for the most part and getting a
+large portion of our Frontend started.  We mob coded the Frontened authorization(login)
+Backend:
+	Updated migration tables
+    Updated project with dummy data through migrations
+	GET top_ten reviews
+	Front end login
+	Four unit tests written and passing pipelines
+	Backend deployment
+    Update account end point
+Frontend:
+	Frontend authorization(login)
+	Create User
+	Create Company
+	Create Review
+	List companies
+	List reviews by company
+    Update Account
+    Company Page
+Currently working on:
+	Home page
+	Nav bar
+	Single review page

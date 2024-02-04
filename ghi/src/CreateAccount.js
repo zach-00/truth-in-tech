@@ -52,7 +52,7 @@ const CreateAccount = () => {
       register(userData, url);
 
       e.target.reset();
-      navigate(`/login`);
+      navigate(`/reviews/create`);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

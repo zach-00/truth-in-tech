@@ -45,6 +45,7 @@ function CompaniesList() {
                                 </td>
                                 <td className="text-center">
                                     <img
+                                    alt=""
                                     src = {`${company.company_logo}`}
                                     className = "img-thumbnail" width="10%"
                                     />

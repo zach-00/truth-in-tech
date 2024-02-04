@@ -80,7 +80,7 @@ const CreateCompanyForm = () => {
       </div>
       <div className="mb-3">
         <button type="submit" className="btn btn-primary" >
-          Submit form
+          Create Company
         </button>
       </div>
     </form>
