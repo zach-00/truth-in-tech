@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Col from 'react-bootstrap/Col';
@@ -13,12 +13,25 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Placeholder from 'react-bootstrap/Placeholder';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import Carousel from 'react-bootstrap/Carousel';
+
 
 function MainPage() {
 
+
+    // Troubleshooting
+    // Checked to see if the endpoints were protected; they are not
+    // Console.logged companies and reviews, data is eventually being returned
+    // Hit both endpoints from swagger, both successfully return data
+    // Both calls to the endpoints are properly using await
+
+
+
+
     const [ companies, setCompanies ] = useState([]);
     const [ reviews, setReviews ] = useState([]);
-    const [show, setShow] = useState(false);
+    const [ show, setShow ] = useState(false);
+    const [ index, setIndex ] = useState(0);
 
     const handleClose = () => setShow(false);
     const toggleShow = () => setShow((s) => !s);
@@ -29,20 +42,28 @@ function MainPage() {
     const fetchCompanies = async () => {
         const url = `${process.env.REACT_APP_API_HOST}/companies/top10`;
 
-        const response = await fetch(url);
-        if (response.ok) {
-            const data = await response.json();
-            setCompanies(data);
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                const data = await response.json();
+                setCompanies(data);
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 
     const fetchReviews = async () => {
         const url = `${process.env.REACT_APP_API_HOST}/reviews/top10/`;
 
-        const response = await fetch(url);
-        if (response.ok) {
-            const data = await response.json();
-            setReviews(data);
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                const data = await response.json();
+                setReviews(data);
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -54,10 +75,15 @@ function MainPage() {
         navigate('reviews/create');
     }
 
+    const handleSelect = (selectedIndex) => {
+        setIndex(selectedIndex);
+    };
+
     useEffect(() => {
         fetchCompanies();
         fetchReviews();
     }, []);
+
 
 
     return (
@@ -92,9 +118,10 @@ function MainPage() {
         </Container>
     </Navbar>
         <h1 className="text-center title">Truth-In-Tech</h1>
-            <Container>
+            <Container fluid="md">
                 <Row>
-                    <Col className="padding" xs={6} md={4}>
+                    {/* These outer columns had xs={6} md={4}, removed them to widen middle column */}
+                    <Col className="padding">
                         <>
                             <Placeholder xs={6} />
                             <Placeholder className="w-75" /> <Placeholder style={{ width: '25%' }} />
@@ -128,10 +155,54 @@ function MainPage() {
                         </>
 
                     </Col>
-                    <Col className="padding" xs={6} md={4}>
-                        <Image src="holder.js/171x180" roundedCircle />
+
+
+
+
+                    <Col className="padding" xs={6}>
+                        <h2 className="text-center">Featured Reviews</h2>
+                        <Carousel activeIndex={index} onSelect={handleSelect}>
+                            {reviews.map((review, index) => {
+                                return (
+                                <Carousel.Item key={index}>
+                                    <Image src={review.company_logo} width="50%"/>
+                                    <Carousel.Caption>
+                                    <h3>{review.job_title}</h3>
+                                    <p>{review.body.slice(0, 100)}...</p>
+                                    </Carousel.Caption>
+                                </Carousel.Item>
+                                );
+                            })}
+
+
+                            {/* <Carousel.Item>
+                                <Image src={reviews[0].company_logo} width="175%"/>
+                                <Carousel.Caption>
+                                <h3>Second slide label</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <Image src={reviews[1].company_logo} />
+                                <Carousel.Caption>
+                                <h3>Third slide label</h3>
+                                <p>
+                                    Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                                </p>
+                                </Carousel.Caption>
+                            </Carousel.Item> */}
+                        </Carousel>
+
+
+
+
+
                     </Col>
-                    <Col className="padding" xs={6} md={4}>
+
+
+
+                        {/* These outer columns had xs={6} md={4}, removed them to widen middle column */}
+                    <Col className="padding">
                         <Card border="primary" style={{ width: '25rem' }}>
                             <Card.Img variant="top" src="Truth-In-Tech-Logo.png" />
                             <Card.Body>
