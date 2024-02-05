@@ -18,16 +18,6 @@ import Carousel from 'react-bootstrap/Carousel';
 
 function MainPage() {
 
-
-    // Troubleshooting
-    // Checked to see if the endpoints were protected; they are not
-    // Console.logged companies and reviews, data is eventually being returned
-    // Hit both endpoints from swagger, both successfully return data
-    // Both calls to the endpoints are properly using await
-
-
-
-
     const [ companies, setCompanies ] = useState([]);
     const [ reviews, setReviews ] = useState([]);
     const [ show, setShow ] = useState(false);
