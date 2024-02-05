@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Badge from "react-bootstrap/Badge";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
 
 function CompanyPage() {
   const [reviews, setReviews] = useState([]);
@@ -15,39 +20,55 @@ function CompanyPage() {
         setReviews(data);
       }
     }
-    getReviews();
-  }, []);
+    getReviews(id);
+  }, [id]);
 
   const companyInfo =
     reviews.length > 0
       ? reviews[0]
-      : {company_name: "There are no reviews for this company yet ",
+      : {
+          company_name: "There are no reviews for this company yet... ",
           company_logo:
-          "https://upload.wikimedia.org/wikipedia/commons/3/37/Sad-face.png",
+            "https://upload.wikimedia.org/wikipedia/commons/3/37/Sad-face.png",
         };
+  console.log(reviews);
 
   return (
     <>
-
       <div>
-        <h1>{companyInfo.company_name}</h1>
-        <h2>
-          <img
-            src={`${companyInfo.company_logo}`}
-            className="img-thumbnail"
-            width="10%"
-          />
-        </h2>
+        <h1>
+          {companyInfo.company_name} <br></br>{" "}
+          <Badge bg="secondary">Reviews</Badge>
+        </h1>
+      </div>
+      <div>
+        <br></br>
+        <Container>
+          <Row>
+            <Col xs={6} md={4}>
+              <Image src={`${companyInfo.company_logo}`} thumbnail />
+            </Col>
+          </Row>
+        </Container>
+        <br></br>
         {reviews.map((review) => (
           <div key={review.id}>
-            <h3>
-              {review.anonymous === true ? "" : `${review.username}--`}$
-              {review.salary}/yr--{review.location}
-              <Link to={`/review/${review.id}`} className="btn btn-primary">
-                → Check this review out
-              </Link>
-            </h3>
-            <p>{review.body}</p>
+            <Card style={{ width: "64rem" }}>
+              <Card.Body>
+                <Card.Title>
+                  {review.anonymous === true ? "" : `${review.username}`} $
+                  {review.salary}/yr {review.job_title}
+                </Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  {review.location}
+                </Card.Subtitle>
+                <Card.Text>{review.body}</Card.Text>
+                <Card.Link href={`/review/${review.id}`}>
+                  Check this review out
+                </Card.Link>
+              </Card.Body>
+            </Card>
+            <br></br>
           </div>
         ))}
       </div>
