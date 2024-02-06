@@ -54,7 +54,7 @@ build-front-end-job:
     # CI/CD variables, that value will override the value here.
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-    PUBLIC_URL: https://truth-in-tech.gitlab.io/truth-in-tech/
+    PUBLIC_URL: https://group-7.gitlab.io/truth-in-tech/
     REACT_APP_API_HOST: https://oct-2023-7-pt-api2.mod3projects.com
   script:
     - cd ghi
