@@ -32,13 +32,15 @@ function Review() {
                 <Card.Body>
                     <Card.Title>
                         <img
+                        alt=""
                         src={`${review.company_logo}`}
                         className = "img-thumbnail" width="10%"
                         />
 
                     </Card.Title>
-                    {review.anonymouns === true ? "" :
-                    <Card.Text> Reviewer:  {review.username}</Card.Text>}
+                    {review.anonymous
+                    ? ""
+                    : <Card.Text> Reviewer:  {review.username}</Card.Text>}
 
                     <Card.Subtitle className="mb-2 text-muted">Job Title:  {review.job_title}</Card.Subtitle>
                     <Card.Text>
