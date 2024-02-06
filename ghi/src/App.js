@@ -12,7 +12,8 @@ import Review from "./Review.js"
 import MainPage from "./MainPage.js";
 
 function App() {
-  const basename = process.env.PUBLIC_HOST;
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_HOST.replace(domain, '');
   const baseUrl = process.env.REACT_APP_API_HOST;
   return (
     <BrowserRouter basename={basename}>
