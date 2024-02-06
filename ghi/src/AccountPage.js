@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Avvvatars from 'avvvatars-react'
+import './AccountPage.css'
 
 
 const UpdateAccountForm = () => {
@@ -105,6 +107,7 @@ const UpdateAccountForm = () => {
 
   return (
     <div className="was-validated">
+      <div className="center-image"><Avvvatars value={updateUserName} style="shape" size={100}/></div>
       <div className="mb-3">
         <label htmlFor="updateEmail" className="form-label">
           Email:

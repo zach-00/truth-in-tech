@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+
+
 function CompaniesList() {
 
     const [ companies, setCompanies] = useState([])
@@ -21,8 +23,8 @@ function CompaniesList() {
 
 
     let navigate = useNavigate()
-    const writeReview = (id) => {
-        navigate(`/reviews/create/${id}`)
+    const writeReview = () => {
+        navigate(`/reviews/create/`)
     }
 
     return(

@@ -29,7 +29,7 @@ async def create_review(
     return result
 
 
-@router.get("/reviews/{review_id}", response_model=ReviewOut)
+@router.get("/reviews/{review_id}", response_model=ReviewOutPlus)
 def get_one_review(
     review_id: int,
     repo: ReviewRepository = Depends(),

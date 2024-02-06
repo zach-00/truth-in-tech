@@ -1,0 +1,6 @@
+.center-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh; /* Optional: Adjust height as needed */
+}
