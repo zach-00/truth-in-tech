@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from 'react-router-dom';
 
 function CreateReview() {
 
@@ -11,7 +12,10 @@ function CreateReview() {
     const [ companies, setCompanies ] = useState([]);
     const [ company, setCompany ] = useState('');
     const [ username, setUsername ] = useState('');
+    const [ triedSubmit, setTriedSubmit ] = useState(false);
+    const errorMessage = (!triedSubmit) ? 'alert alert-danger mb-0 d-none' : 'alert alert-danger mb-0';
     const { token } = useAuthContext();
+    const navigate = useNavigate();
 
 
     const handleToggleChange = () => {
@@ -80,6 +84,10 @@ function CreateReview() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (token === null) {
+            setTriedSubmit(true);
+        }
+
         const url = `${process.env.REACT_APP_API_HOST}/reviews`;
 
         const data = {
@@ -110,11 +118,13 @@ function CreateReview() {
                 setLocation('');
                 setCompany('');
                 setBody('');
+                navigate(`/reviews/${company}`);
             }
         } catch (err) {
             console.error(err);
         }
     }
+
 
     return (
         <div className="row">
@@ -217,10 +227,14 @@ function CreateReview() {
                     </div>
 
                     <button
-                    className="btn btn-outline-primary"
+                    className="btn btn-outline-primary mb-3"
                     >
                         Create
                     </button>
+
+                    <div className={errorMessage}>
+                        You must be logged in to post a review.
+                    </div>
 
                 </form>
                 </div>
