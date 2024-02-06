@@ -11,6 +11,7 @@ import CompanyPage from "./CompanyPage.js";
 import Review from "./Review.js"
 import MainPage from "./MainPage.js";
 
+
 function App() {
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, '');
@@ -19,7 +20,7 @@ function App() {
     <BrowserRouter basename={basename}>
       <div className="container">
         <AuthProvider baseUrl={baseUrl}>
-          <CustomNav/>
+          <CustomNav />
           <Routes>
             <Route index element={<MainPage/>} />
 
