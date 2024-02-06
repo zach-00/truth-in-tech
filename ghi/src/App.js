@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
-import LoginForm from "./login.js";
 import CreateCompanyForm from "./CreateCompany.js";
 import UpdateAccountForm from "./AccountPage.js";
 import CreateReview from "./CreateReview.js";
 import CompaniesList from "./CompaniesList.js";
 import CreateAccount from "./CreateAccount.js";
+import CustomNav from "./Nav.js";
 import CompanyPage from "./CompanyPage.js";
 import Review from "./Review.js"
 import MainPage from "./MainPage.js";
@@ -18,6 +18,7 @@ function App() {
     <BrowserRouter basename={basename}>
       <div className="container">
         <AuthProvider baseUrl={baseUrl}>
+          <CustomNav/>
           <Routes>
             <Route index element={<MainPage />} />
             <Route path="login" element={<LoginForm />} />

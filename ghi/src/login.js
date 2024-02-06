@@ -1,5 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from 'react';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -38,36 +39,30 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="card text-bg-light mb-3">
-      <div className="dropdown">
-        <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-            Login
-        </button>
-        <form className="dropdown-menu p-4" onSubmit={(e) => handleSubmit(e)}>
-          <div className="mb-3">
-            <label className="form-label">Username:</label>
-            <input
-              name="username"
-              type="text"
+    <NavDropdown title="Login" id="navbarScrollingDropdown">
+        <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
+          <InputGroup>
+            <InputGroup.Text id="basic-addon1">Username:</InputGroup.Text>
+            <Form.Control
+              placeholder="Username"
+              aria-label="text"
               className="form-control"
               onChange={handleUsernameChange}
             />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password:</label>
-            <input
-              name="password"
+          </InputGroup>
+          <InputGroup>
+            <InputGroup.Text id="basic-addon1">Password:</InputGroup.Text>
+            <Form.Control
               type="password"
+              placeholder="Password"
+              aria-label="password"
               className="form-control"
               onChange={handlePasswordChange}
             />
-          </div>
-          <div>
-            <button type="submit" className="btn btn-primary">Login</button>
-          </div>
-        </form>
-      </div>
-    </div>
+          </InputGroup>
+          <Button type="submit" className="btn btn-primary">Login</Button>
+        </Form>
+    </NavDropdown>
   );
 };
 
