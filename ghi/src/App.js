@@ -8,6 +8,7 @@ import CreateReview from "./CreateReview.js";
 import CompaniesList from "./CompaniesList.js";
 import CreateAccount from "./CreateAccount.js";
 import CompanyPage from "./CompanyPage.js";
+import Review from "./Review.js"
 import MainPage from "./MainPage.js";
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
             <Route path="reviews">
               <Route path="create" element={<CreateReview />} />
               <Route path=":id" element={<CompanyPage />} />
+            </Route>
+            <Route path="review">
+              <Route path=":id" element={<Review />} />
             </Route>
           </Routes>
         </AuthProvider>

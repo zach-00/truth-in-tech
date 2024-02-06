@@ -149,41 +149,39 @@ class ReviewRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id,
-                            anonymous,
-                            salary,
-                            job_title,
-                            location,
-                            body,
-                            account_id,
-                            company_id,
-                            date_created
+                        SELECT
+                            reviews.*,
+                            companies.company_name,
+                            companies.company_logo,
+                            accounts.username,
+                            accounts.first_name,
+                            accounts.last_name
                         FROM reviews
-                        WHERE id = %s
+                        INNER JOIN companies ON
+                            companies.id = reviews.company_id
+                        INNER JOIN accounts ON
+                            accounts.id = reviews.account_id
+                        WHERE reviews.id = %s
                         """,
                         [review_id],
                     )
-                    (
-                        id,
-                        anonymous,
-                        salary,
-                        job_title,
-                        location,
-                        body,
-                        account_id,
-                        company_id,
-                        date_created,
-                    ) = result.fetchone()
-                    return ReviewOut(
-                        id=id,
-                        anonymous=anonymous,
-                        salary=salary,
-                        job_title=job_title,
-                        location=location,
-                        body=body,
-                        account_id=account_id,
-                        company_id=company_id,
-                        date_created=date_created,
+                    review = result.fetchone()
+
+                    return ReviewOutPlus(
+                        id=review[0],
+                        anonymous=review[1],
+                        salary=review[2],
+                        job_title=review[3],
+                        location=review[4],
+                        body=review[5],
+                        account_id=review[6],
+                        company_id=review[7],
+                        date_created=review[8],
+                        company_name=review[9],
+                        company_logo=review[10],
+                        username=review[11],
+                        first_name=review[12],
+                        last_name=review[13],
                     )
         except Exception as e:
             raise HTTPException(
