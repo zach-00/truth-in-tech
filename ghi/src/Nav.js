@@ -32,7 +32,7 @@ function CustomNav() {
     }
 
     const handleNavHomeButton = () => {
-        navigate('/');
+        navigate('/truth-in-tech/');
     }
 
     useEffect(() => {
