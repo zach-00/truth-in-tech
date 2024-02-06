@@ -11,6 +11,7 @@ const UpdateAccountForm = () => {
     const [updateLastname, setupdateLastname] = useState('');
     const navigate = useNavigate();
     const goToHomePage = () => navigate('/');
+    const shape = "shape"
 
 
     const handleOldInfo = async () => {
@@ -107,7 +108,7 @@ const UpdateAccountForm = () => {
 
   return (
     <div className="was-validated">
-      <div className="center-image"><Avvvatars value={updateUserName} style="shape" size={100}/></div>
+      <div className="center-image"><Avvvatars value={updateUserName} style={shape} size={100}/></div>
       <div className="mb-3">
         <label htmlFor="updateEmail" className="form-label">
           Email:

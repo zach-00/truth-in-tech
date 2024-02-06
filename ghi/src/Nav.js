@@ -11,9 +11,11 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom"
 
 
+
 function CustomNav() {
     const [username, setUsername] = useState('')
     const {token} = useAuthContext();
+    const shape = "shape"
 
     const fetchToken = async () => {
         try {
@@ -47,7 +49,7 @@ function CustomNav() {
 
                     {token
                     ? <>
-                        <div><Avvvatars value={username} style="shape" /></div>
+                        <div><Avvvatars value={username} style={shape} /></div>
                         &nbsp;
                         &nbsp;
                         <div>Hello, {username}</div>

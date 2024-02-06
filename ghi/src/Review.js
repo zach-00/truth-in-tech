@@ -22,7 +22,7 @@ function Review() {
 
     useEffect(() => {
         getReview();
-    }, []);
+    }, [id]);
 
 
     return (
