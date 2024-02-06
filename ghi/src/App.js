@@ -20,8 +20,7 @@ function App() {
         <AuthProvider baseUrl={baseUrl}>
           <CustomNav/>
           <Routes>
-            <Route index element={<MainPage />} />
-            <Route path="login" element={<LoginForm />} />
+            <Route index element={<MainPage/>} />
 
             <Route path="accounts">
               <Route path="create" element={<CreateAccount />} />
