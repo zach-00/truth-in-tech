@@ -23,8 +23,8 @@ function CompaniesList() {
 
 
     let navigate = useNavigate()
-    const writeReview = (id) => {
-        navigate(`/reviews/create/${id}`)
+    const writeReview = () => {
+        navigate(`/reviews/create/`)
     }
 
     return(

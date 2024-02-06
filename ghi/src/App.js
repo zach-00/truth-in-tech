@@ -9,8 +9,7 @@ import CreateAccount from "./CreateAccount.js";
 import CustomNav from "./Nav.js";
 import CompanyPage from "./CompanyPage.js";
 import Review from "./Review.js"
-
-
+import MainPage from "./MainPage.js";
 
 function App() {
   const basename = process.env.PUBLIC_HOST;
@@ -21,6 +20,8 @@ function App() {
         <AuthProvider baseUrl={baseUrl}>
           <CustomNav/>
           <Routes>
+            <Route index element={<MainPage/>} />
+
             <Route path="accounts">
               <Route path="create" element={<CreateAccount />} />
               <Route path="update" element={<UpdateAccountForm/>}/>
@@ -29,6 +30,7 @@ function App() {
               <Route path="create" element={<CreateCompanyForm />} />
               <Route path="list" element={<CompaniesList />} />
             </Route>
+
             <Route path="reviews">
               <Route path="create" element={<CreateReview />} />
               <Route path=":id" element={<CompanyPage />} />
