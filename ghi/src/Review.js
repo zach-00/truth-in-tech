@@ -8,21 +8,21 @@ function Review() {
     let {id} = useParams()
 
     const [review, setReview] = useState({});
+    
+    useEffect(() => {
+        async function getReview() {
 
-    async function getReview() {
+            const response = await fetch(`${process.env.REACT_APP_API_HOST}/reviews/${id}`)
 
-        const response = await fetch(`${process.env.REACT_APP_API_HOST}/reviews/${id}`)
+            if (response.ok) {
+                const data = await response.json();
+                setReview(data)
+            }
 
-        if (response.ok) {
-            const data = await response.json();
-            setReview(data)
         }
 
-    }
-
-    useEffect(() => {
         getReview();
-    }, []);
+    }, [id]);
 
 
     return (

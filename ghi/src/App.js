@@ -11,14 +11,16 @@ import CompanyPage from "./CompanyPage.js";
 import Review from "./Review.js"
 import MainPage from "./MainPage.js";
 
+
 function App() {
-  const basename = process.env.PUBLIC_HOST;
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, '');
   const baseUrl = process.env.REACT_APP_API_HOST;
   return (
     <BrowserRouter basename={basename}>
       <div className="container">
         <AuthProvider baseUrl={baseUrl}>
-          <CustomNav/>
+          <CustomNav />
           <Routes>
             <Route index element={<MainPage/>} />
 
