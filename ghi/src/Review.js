@@ -32,6 +32,7 @@ function Review() {
                 <Card.Body>
                     <Card.Title>
                         <img
+                        alt=""
                         src={`${review.company_logo}`}
                         className = "img-thumbnail" width="10%"
                         />
