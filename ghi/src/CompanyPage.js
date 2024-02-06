@@ -11,7 +11,7 @@ function CompanyPage() {
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
 
-
+    useEffect(() => {
     async function getReviews() {
       const url = `${process.env.REACT_APP_API_HOST}/reviews/companies/${id}`;
       const response = await fetch(url);

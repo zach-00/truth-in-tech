@@ -1,4 +1,3 @@
-// import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Col from 'react-bootstrap/Col';
@@ -75,7 +74,6 @@ function MainPage() {
     }, []);
 
 
-
     return (
         <>
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="light">
@@ -110,7 +108,6 @@ function MainPage() {
         <h1 className="text-center title">Truth-In-Tech</h1>
             <Container>
                 <Row>
-                    {/* These outer columns had xs={6} md={4}, removed them to widen middle column */}
                     <Col className="padding">
                         <>
                             <Placeholder xs={6} />
@@ -123,7 +120,6 @@ function MainPage() {
                                 10 Most Reviewed Companies
                             </Button>
                         </div>
-
 
                         <Offcanvas show={show} onHide={handleClose}>
                             <Offcanvas.Header closeButton>
@@ -146,52 +142,33 @@ function MainPage() {
 
                     </Col>
 
-
-
-
-                    <Col className="padding" xs={6}>
+                    <Col className="padding" xs={6} >
                         <h2 className="text-center">Featured Reviews</h2>
-                        <Carousel activeIndex={index} onSelect={handleSelect}>
+                        <Carousel className="carousel-inner text-center" activeIndex={index} onSelect={handleSelect}>
                             {reviews.map((review, index) => {
                                 return (
                                 <Carousel.Item key={index}>
-                                    <Image src={review.company_logo} width="50%"/>
+                                    <Image src={review.company_logo} width="50%" alt=""/>
                                     <Carousel.Caption>
-                                    <h3>{review.job_title}</h3>
-                                    <p>{review.body.slice(0, 100)}...</p>
                                     </Carousel.Caption>
+                                        <Card className="offset-2" style={{ width: '27rem' }}>
+                                            <Card.Body >
+                                                <Card.Title>{review.job_title}</Card.Title>
+                                                <Card.Subtitle className="mb-2 text-muted">{review.location}</Card.Subtitle>
+                                                <Card.Text>
+                                                {review.body}
+                                                </Card.Text>
+                                                <br></br>
+                                            </Card.Body>
+                                        </Card>
                                 </Carousel.Item>
                                 );
                             })}
 
-
-                            {/* <Carousel.Item>
-                                <Image src={reviews[0].company_logo} width="175%"/>
-                                <Carousel.Caption>
-                                <h3>Second slide label</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </Carousel.Caption>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <Image src={reviews[1].company_logo} />
-                                <Carousel.Caption>
-                                <h3>Third slide label</h3>
-                                <p>
-                                    Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                                </p>
-                                </Carousel.Caption>
-                            </Carousel.Item> */}
                         </Carousel>
-
-
-
-
 
                     </Col>
 
-
-
-                        {/* These outer columns had xs={6} md={4}, removed them to widen middle column */}
                     <Col className="padding">
                         <Card border="primary" style={{ width: '20rem' }}>
                             <Card.Img variant="top" src="Truth-In-Tech-Logo.png" />
