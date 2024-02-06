@@ -22,6 +22,7 @@ function App() {
         <AuthProvider baseUrl={baseUrl}>
           <CustomNav />
           <Routes>
+
             <Route index element={<MainPage/>} />
 
             <Route path="accounts">
@@ -40,6 +41,7 @@ function App() {
             <Route path="review">
               <Route path=":id" element={<Review />} />
             </Route>
+
           </Routes>
         </AuthProvider>
       </div>

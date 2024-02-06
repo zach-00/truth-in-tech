@@ -9,14 +9,11 @@ import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import Avvvatars from 'avvvatars-react'
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom"
-import { useNavigate } from "react-router-dom";
-
 
 
 function CustomNav() {
     const [username, setUsername] = useState('')
     const {token} = useAuthContext();
-    const navigate = useNavigate();
 
     const fetchToken = async () => {
         try {
@@ -31,10 +28,6 @@ function CustomNav() {
         }
     }
 
-    const handleNavHomeButton = () => {
-        navigate('/truth-in-tech/');
-    }
-
     useEffect(() => {
         fetchToken();
     }, [token]);
@@ -43,7 +36,7 @@ function CustomNav() {
     <>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="/" onClick={handleNavHomeButton}>TruthInTech</Navbar.Brand>
+        <Navbar.Brand href={'/'}>TruthInTech</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-wrap space-between">
