@@ -82,6 +82,7 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
 
 <details>
 <summary markdown="span">GET /token - Get Token</summary>
+
 ```
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNDM5MDA1Mi03YmRjLTRjZjgtYjYxMy0yZWIzY2RhNDczMjUiLCJleHAiOjE3MDcyNjcyNTAsInN1YiI6IlRydXRoSW5UZWNoIiwiYWNjb3VudCI6eyJpZCI6MSwidXNlcm5hbWUiOiJUcnV0aEluVGVjaCIsImZpcnN0X25hbWUiOiJKb2huIiwibGFzdF9uYW1lIjoiRG9lIn19.sOVkWcHazYSqyj1lJsYoMWIlzVJ-c_lQPuKKooHEqC4",
@@ -94,31 +95,37 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   }
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">POST /token - Login</summary>
+
 ```
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2YjE0ZDYwNy0xNGM5LTQwNTQtYTMxNC0wMDk3MWQ2NzY1ZWEiLCJleHAiOjE3MDcyNjg4MTMsInN1YiI6IlRydXRoSW5UZWNoIiwiYWNjb3VudCI6eyJpZCI6MSwidXNlcm5hbWUiOiJUcnV0aEluVGVjaCIsImZpcnN0X25hbWUiOiJKb2huIiwibGFzdF9uYW1lIjoiRG9lIn19.XNsTzvb40GxVS8Yi7JMY4GysRA1vRC2n0IbrAz7IDJM",
   "token_type": "Bearer"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">DELETE /token - Logout</summary>
+
 ```
 {
   true
 }
 ```
+
 </details>
 
 ##### Accounts
 
 <details>
 <summary markdown="span">GET/accounts - Get Account</summary>
+
 ```
 {
   "id": 1,
@@ -128,10 +135,12 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   "email": "johndoe@gmail.com"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">PUT/accounts - Update Account</summary>
+
 ```
 {
   "id": 1,
@@ -141,19 +150,23 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   "email": "johndoe@gmail.com"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">DELETE/accounts - Delete Account</summary>
+
 ```
 {
   true
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">POST/accounts - Create Account</summary>
+
 ```
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwYmM2NzI1YS05MWRmLTQ1NTMtOTQ3ZS1kMWJhMWFjOTYwNmQiLCJleHAiOjE3MDcyNjkyMjksInN1YiI6IlRydXRoIiwiYWNjb3VudCI6eyJpZCI6MjAsInVzZXJuYW1lIjoiVHJ1dGgiLCJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSJ9fQ.CzVvSVwx8dCU8OYr36YjO4rIT-FTCP68DFfnKPLahFQ",
@@ -166,12 +179,14 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   }
 }
 ```
+
 </details>
 
 ##### Reviews
 
 <details>
 <summary markdown="span">POST/reviews - Create Review</summary>
+
 ```
 {
   "id": 1,
@@ -185,10 +200,12 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   "date_created": "2024-02-07"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">GET/reviews{review_id} - Get One Review</summary>
+
 ```
 {
   "id": 1,
@@ -207,10 +224,12 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   "last_name": "Doe"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">PUT/reviews{review_id} - Edit Review</summary>
+
 ```
 {
   "anonymous": false,
@@ -220,19 +239,23 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   "body": "After bootcamp I got hired to work remotely as a Software Engineer!"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">DELETE/reviews/{review_id} - Delete a Review</summary>
+
 ```
 {
   true
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">GET/reviews/companies/{company_id} - Get all reviews from one company</summary>
+
 ```
 [
   {
@@ -253,19 +276,23 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
   }
 ]
 ```
+
 </details>
 
 <details>
 <summary markdown="span">GET/reviews/top10/ - Get Top 10 Reviews</summary>
+
 ```
 This has are 10 hardcoded reviews for our carousel.
 ```
+
 </details>
 
 ##### Companies
 
 <details>
 <summary markdown="span">GET/reviews/top10 - Get Top 10 Reviews based on how many reviews they have.</summary>
+
 ```
 [
   {
@@ -330,10 +357,12 @@ This has are 10 hardcoded reviews for our carousel.
   }
 ]
 ```
+
 </details>
 
 <details>
 <summary markdown="span">GET/companies/{company_id} - Get One Company</summary>
+
 ```
 {
   "id": 1,
@@ -341,19 +370,23 @@ This has are 10 hardcoded reviews for our carousel.
   "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">DELETE/companies/{company_id} - Delete Company</summary>
+
 ```
 {
   true
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">GET/companies - Get Companies</summary>
+
 ```
 {
   "companies": [
@@ -370,10 +403,12 @@ This has are 10 hardcoded reviews for our carousel.
   ]
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">POST/companies - Create Company</summary>
+
 ```
 {
     "id": 1,
@@ -381,10 +416,12 @@ This has are 10 hardcoded reviews for our carousel.
     "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png"
 }
 ```
+
 </details>
 
 <details>
 <summary markdown="span">PUT/companies/update/{company_id} - Update Company</summary>
+
 ```
 {
     "id": 1,
@@ -392,4 +429,5 @@ This has are 10 hardcoded reviews for our carousel.
     "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png"
 }
 ```
+
 </details>
