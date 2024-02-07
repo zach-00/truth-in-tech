@@ -6,10 +6,10 @@ The Website
 
 **The Team**
 
-- Adedeji "Toon" Adetunji | [LinkedIn] (https://www.linkedin.com/in/adedeji-adetunji-900452290/)
-- Matt Archbold | [LinkedIn] (https://www.linkedin.com/in/matt-archbold-690a56278/)
-- Cory Egan | [LinkedIn] (https://www.linkedin.com/in/cory-egan-a980378b/)
-- Zach Walkowiak | [LinkedIn] (https://www.linkedin.com/in/zachary-walkowiak-8384a31b5/)
+- Adedeji "Toon" Adetunji | [LinkedIn](https://www.linkedin.com/in/adedeji-adetunji-900452290/)
+- Matt Archbold | [LinkedIn](https://www.linkedin.com/in/matt-archbold-690a56278/)
+- Cory Egan | [LinkedIn](https://www.linkedin.com/in/cory-egan-a980378b/)
+- Zach Walkowiak | [LinkedIn](https://www.linkedin.com/in/zachary-walkowiak-8384a31b5/)
 
   ![alt text](<docs/Truth In Tech Logo.png>)
 

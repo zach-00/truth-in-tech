@@ -35,6 +35,8 @@ function CompanyPage() {
 
   return (
     <>
+    <div className="row">
+      <div className="offset-2 col-6">
       <div>
         <h1>
           {companyInfo.company_name} <br></br>{" "}
@@ -71,6 +73,8 @@ function CompanyPage() {
             <br></br>
           </div>
         ))}
+      </div>
+      </div>
       </div>
     </>
   );
