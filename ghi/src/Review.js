@@ -8,7 +8,7 @@ function Review() {
     let {id} = useParams()
 
     const [review, setReview] = useState({});
-    
+
     useEffect(() => {
         async function getReview() {
 
@@ -26,29 +26,33 @@ function Review() {
 
 
     return (
-           <div>
-            <br></br>
-            <Card style={{ width: '60rem' }}>
-                <Card.Body>
-                    <Card.Title>
-                        <img
-                        alt=""
-                        src={`${review.company_logo}`}
-                        className = "img-thumbnail" width="10%"
-                        />
+        <div className="row">
+            <div className="offset-1 col-6">
+                <div>
+                <br></br>
+                <Card style={{ width: '60rem' }}>
+                    <Card.Body>
+                        <Card.Title>
+                            <img
+                            alt=""
+                            src={`${review.company_logo}`}
+                            className = "img-thumbnail" width="10%"
+                            />
 
-                    </Card.Title>
-                    {review.anonymous
-                    ? ""
-                    : <Card.Text> Reviewer:  {review.username}</Card.Text>}
+                        </Card.Title>
+                        {review.anonymous
+                        ? ""
+                        : <Card.Text> Reviewer:  {review.username}</Card.Text>}
 
-                    <Card.Subtitle className="mb-2 text-muted">Job Title:  {review.job_title}</Card.Subtitle>
-                    <Card.Text>
-                        {review.body}
-                    </Card.Text>
-                </Card.Body>
-            </Card>
+                        <Card.Subtitle className="mb-2 text-muted">Job Title:  {review.job_title}</Card.Subtitle>
+                        <Card.Text>
+                            {review.body}
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </div>
         </div>
+    </div>
     )
 }
 
