@@ -1,12 +1,15 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 
 
 function CompaniesList() {
 
-    const [ companies, setCompanies] = useState([])
+    const [ companies, setCompanies] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
 
     async function getCompanies() {
         const response = await fetch(`${process.env.REACT_APP_API_HOST}/companies`)
@@ -16,6 +19,19 @@ function CompaniesList() {
             setCompanies(data.companies)
         }
     }
+
+    const handleFilter = (event) => {
+    const searchCompany = event.target.value
+    setFilteredData(searchCompany)
+    };
+
+    let filter = companies;
+    if (filteredData.length > 0) {
+        filter = companies.filter((company) =>
+            company.company_name.toUpperCase().includes(filteredData.toUpperCase())
+        )
+    }
+
 
     useEffect(() => {
         getCompanies();
@@ -30,6 +46,16 @@ function CompaniesList() {
     return(
         <div>
             <h1>Technology Companies</h1>
+            <Form className="d-flex">
+                <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                onChange={handleFilter}
+                />
+                <Button variant="outline-success">Search</Button>
+            </Form>
             <table className="table table-striped" margin-left="auto">
                 <thead>
                     <tr>
@@ -39,7 +65,7 @@ function CompaniesList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {companies.map( company => {
+                    {filter.map( (company) => {
                         return (
                             <tr key={company.id}>
                                 <td className="nav-item">
@@ -57,7 +83,7 @@ function CompaniesList() {
                                 </td>
                             </tr>
                         )
-                    })}
+                    })};
                 </tbody>
             </table>
         </div>

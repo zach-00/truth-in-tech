@@ -1,13 +1,12 @@
 import LoginForm from "./login.js";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-// import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import LogoutButton from "./logout.js";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import Avvvatars from 'avvvatars-react'
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom"
 
 
@@ -15,6 +14,7 @@ import { NavLink, Link } from "react-router-dom"
 function CustomNav() {
     const [username, setUsername] = useState('')
     const {token} = useAuthContext();
+
 
     const fetchToken = async () => {
         try {
@@ -29,9 +29,11 @@ function CustomNav() {
         }
     }
 
+
     useEffect(() => {
         fetchToken();
     }, [token]);
+
 
   return (
     <>
@@ -88,16 +90,6 @@ function CustomNav() {
                     </NavLink>
                 </Nav>
             </ul>
-
-          {/* <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
