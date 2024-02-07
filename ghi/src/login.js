@@ -40,7 +40,8 @@ const LoginForm = () => {
   };
 
   return (
-    <button type="button" className="btn btn-outline-light btn-sm"><NavDropdown title="Login">
+    <button type="button" className="btn btn-outline-light btn-sm">
+      <NavDropdown id="login-button" title="Login">
         <div className="form-group">
         <Form className="max form-padding">
           <div className="row">
