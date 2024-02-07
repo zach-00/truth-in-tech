@@ -39,7 +39,7 @@ function CustomNav() {
     <>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand as={Link} to={'/'}>TruthInTech</Navbar.Brand>
+        <Navbar.Brand as={Link} to={'/'} style={{ color: "white" }} >TruthInTech</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-wrap space-between">
@@ -53,7 +53,7 @@ function CustomNav() {
                         <div><Avvvatars value={username} style={{shape: true}} /></div>
                         &nbsp;
                         &nbsp;
-                        <div>Hello, {username}</div>
+                        <div className="d-grid align-items-center" >Hello, {username}</div>
                         &nbsp;
                         &nbsp;
                         <div>

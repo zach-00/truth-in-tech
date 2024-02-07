@@ -30,7 +30,8 @@ const LoginForm = () => {
     try {
         login(username, password);
 
-        e.target.reset();
+        setUsername('');
+        setPassword('');
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -39,10 +40,13 @@ const LoginForm = () => {
   };
 
   return (
-    <NavDropdown title="Login" id="navbarScrollingDropdown">
-        <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
-          <InputGroup>
-            <InputGroup.Text id="basic-addon1">Username:</InputGroup.Text>
+    <button type="button" className="btn btn-outline-light btn-sm"><NavDropdown title="Login">
+        <div className="form-group">
+        <Form className="max form-padding">
+          <div className="row">
+
+          <InputGroup className="container-fluid">
+            {/* <InputGroup.Text className="form-control-lg" id="basic-addon1">Username:</InputGroup.Text> */}
             <Form.Control
               placeholder="Username"
               aria-label="text"
@@ -50,8 +54,12 @@ const LoginForm = () => {
               onChange={handleUsernameChange}
             />
           </InputGroup>
+          </div>
+
+          <div className="row">
+
           <InputGroup>
-            <InputGroup.Text id="basic-addon1">Password:</InputGroup.Text>
+            {/* <InputGroup.Text id="basic-addon1">Password:</InputGroup.Text> */}
             <Form.Control
               type="password"
               placeholder="Password"
@@ -60,10 +68,16 @@ const LoginForm = () => {
               onChange={handlePasswordChange}
             />
           </InputGroup>
-          <Button type="submit" className="btn btn-primary">Login</Button>
+          </div>
+          <div className="d-grid gap-2">
+          <div onClick={handleSubmit} className="btn btn-primary">Login</div>
+          </div>
         </Form>
-    </NavDropdown>
+        </div>
+    </NavDropdown></button>
   );
 };
 
 export default LoginForm;
+
+// width: max-content
