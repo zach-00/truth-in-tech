@@ -26,3 +26,13 @@ code {
 .padding-top {
   padding-top: 1rem;
 }
+
+
+.company-links {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.company-links:hover {
+  text-decoration: underline;
+  color: red;
+}

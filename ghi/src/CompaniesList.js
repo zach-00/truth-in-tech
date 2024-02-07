@@ -43,7 +43,7 @@ function CompaniesList() {
                         return (
                             <tr key={company.id}>
                                 <td className="nav-item">
-                                    <NavLink className="nav-link" to={`/reviews/${company.id}`}>{company.company_name}</NavLink>
+                                    <NavLink className="nav-link" to={`/reviews/${company.id}`}><h3 className="company-links">{company.company_name}</h3></NavLink>
                                 </td>
                                 <td className="text-center">
                                     <img

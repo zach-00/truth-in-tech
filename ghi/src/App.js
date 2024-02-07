@@ -10,6 +10,7 @@ import CustomNav from "./Nav.js";
 import CompanyPage from "./CompanyPage.js";
 import Review from "./Review.js"
 import MainPage from "./MainPage.js";
+import Footer from "./Footer.js";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             </Route>
 
           </Routes>
+          <Footer />
         </AuthProvider>
       </div>
     </BrowserRouter>

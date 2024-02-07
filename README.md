@@ -33,7 +33,7 @@ Now you should see 3 containers up and running locally in your Docker Desktop.
 
 # Home Page http://localhost:3000
   - Here you can see our top ten companies reviewed.  A carousel of excellent reviews.  Also a button to create your own review.
-  ![alt text](image.png)
+  ![alt text](<ghi/public/image.png)
 # Login/Logout http://localhost:3000
   - Through our Navigation Bar you can log in and out of an account.
 
@@ -42,27 +42,27 @@ Now you should see 3 containers up and running locally in your Docker Desktop.
 
 # Account Page http://localhost:3000/accounts/update
   - Here you can edit your account page.
-  ![alt text](image-2.png)
+  ![alt text](<ghi/public/image-2.png)
 
 # Create a Company http://localhost:3000/Comanies/create
   - On this page you can create a Company if you have an account.
-  ![alt text](image-4.png)
+  ![alt text](<ghi/public/image-4.png)
 
 # Create a Review http://localhost:3000/reviews/create
 - We built a page where you can Anonymously post a review.  You can only post a review when you have an account.
-  ![alt text](image-5.png)
+  ![alt text](<ghi/public/image-5.png)
 
 # Company List Page http://localhost:3000/Companies/list
 - Functionality in this page shows all of our companies with their logos and has a button in order to write a review for a specific company.  If you click on the company name it will take you to that company's page.
-![alt text](image-6.png)
+![alt text](<ghi/public/image-6.png)
 
 # Company Page http://localhost:3000/reviews/id
 - Here we can see all the reviews for one company.  If there are no reviews for a company you will get a sad face.
-![alt text](image-7.png)
+![alt text](<ghi/public/image-7.png)
 
 # Check out a Review http://localhost:3000/review/id
 - We built this page to show one specific review for a company.
-![alt text](image-9.png)
+![alt text](<ghi/public/image-9.png)
 
 
 ### FastAPI Endpoints
