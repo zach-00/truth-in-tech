@@ -1,141 +1,382 @@
-# Module3 Project Gamma
+# Truth in Tech
+The Website
+https://truth-in-tech.gitlab.io/truth-in-tech/
 
-## Getting started
+The Team
+Adedeji "Toon" Adetunji - Software Developer
+Matt Archbold - Software Developer
+Cory Egan - Software Developer
+Zach Walkowiak - Software Developer
+![alt text](<docs/Truth In Tech Logo.png>)
 
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
+## What is Truth in Tech?
 
-## Install Extensions
+"Truth in Tech" is a platform dedicated to providing unbiased and informative reviews about technology companies.  This helps our users to make informed decisions about their career choices and work environments.  This website is intended for anyone who is currently in or interested in breaking into the Technology career field.
 
-- Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-- Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+## Project Initialization
 
-## Deliverables
+1. In your terminal make sure you are in the directory you want to clone the project into.
+2. Clone the repository typing:
+      git clone https://gitlab.com/truth-in-tech/truth-in-tech.git
+3. Switch into the your project directory by typing cd truth-in-tech
+4. Run docker volume create truth-in-tech-data
+5. Run docker compose build
+6. Run docker compose up
 
-- [ ] Wire-frame diagrams
-- [ ] API documentation
-- [ ] Project is deployed to Caprover (BE, DB) & GitLab-pages (FE)
-- [ ] GitLab issue board is setup and in use (or project management tool of choice)
-- [ ] Journals
+Now you should see 3 containers up and running locally in your Docker Desktop.
+7. To view the backend functionality go to http://localhost:8000/docs
+8. To view the frontend functionality go to http://localhost:3000
 
-## Project layout
+# Design
 
-The layout of the project is just like all of the projects
-you did with `docker-compose` in module #2. You will create
-a directory in the root of the repository for each service
-that you add to your project just like those previous
-projects were setup.
+## Functionality through React Routes
 
-### Directories
+# Home Page http://localhost:3000
+  - Here you can see our top ten companies reviewed.  A carousel of excellent reviews.  Also a button to create your own review.
+  ![alt text](image.png)
+# Login/Logout http://localhost:3000
+  - Through our Navigation Bar you can log in and out of an account.
 
-Several directories have been added to your project. The
-directories `docs` and `journals` are places for you and
-your team-mates to, respectively, put any documentation
-about your project that you create and to put your
-project-journal entries. See the _README.md_ file in each
-directory for more info.
+# Create Account http://localhost:3000/accounts/create
+  - Here you can create an account with a user name, first name, last name, email, and password.  This will automatically give you an Avatar picture as well.
 
-The other directories, `ghi` and `api`, are services, that
-you can start building off of.
+# Account Page http://localhost:3000/accounts/update
+  - Here you can edit your account page.
+  ![alt text](image-2.png)
 
-Inside of `ghi` is a minimal React app that has an "under
-construction" page. It is setup similarly to all of the
-other React projects that you have worked on.
+# Create a Company http://localhost:3000/Comanies/create
+  - On this page you can create a Company if you have an account.
+  ![alt text](image-4.png)
 
-Inside of `api` is a minimal FastAPI application.
-"Where are all the files?" you might ask? Well, the
-`main.py` file is the whole thing, and go take look inside
-of it... There's not even much in there..., hmm? That is
-FastAPI, we'll learn more about it in the coming days. Can
-you figure out what this little web-application does even
-though you haven't learned about FastAPI yet?
+# Create a Review http://localhost:3000/reviews/create
+- We built a page where you can Anonymously post a review.  You can only post a review when you have an account.
+  ![alt text](image-5.png)
 
-Also in `api` is a directory for your migrations.
-If you choose to use PostgreSQL, then you'll want to use
-migrations to control your database. Unlike Django, where
-migrations were automatically created for you, you'll write
-yours by hand using DDL. Don't worry about not knowing what
-DDL means; we have you covered. There's a sample migration
-in there that creates two tables so you can see what they
-look like.
+# Company List Page http://localhost:3000/Companies/list
+- Functionality in this page shows all of our companies with their logos and has a button in order to write a review for a specific company.  If you click on the company name it will take you to that company's page.
+![alt text](image-6.png)
 
-The Dockerfile and Dockerfile.dev run your migrations
-for you automatically.
+# Company Page http://localhost:3000/reviews/id
+- Here we can see all the reviews for one company.  If there are no reviews for a company you will get a sad face.
+![alt text](image-7.png)
 
-### Other files
+# Check out a Review http://localhost:3000/review/id
+- We built this page to show one specific review for a company.
+![alt text](image-9.png)
 
-The following project files have been created as a minimal
-starting point. Please follow the guidance for each one for
-a most successful project.
 
-- `docker-compose.yaml`: there isn't much in here, just a
-  **really** simple UI and FastAPI service. Add services
-  (like a database) to this file as you did with previous
-  projects in module #2.
-- `.gitlab-ci.yml`: This is your "ci/cd" file where you will
-  configure automated unit tests, code quality checks, and
-  the building and deployment of your production system.
-  Currently, all it does is deploy an "under construction"
-  page to your production UI on GitLab and a sample backend
-  to CapRover. We will learn much more about this file.
-- `.gitignore`: This is a file that prevents unwanted files
-  from getting added to your repository, files like
-  `pyc` files, `__pycache__`, etc. We've set it up so that
-  it has a good default configuration for Python projects.
-- `.env.sample`: This file is a template to copy when
-  creating environment variables for your team. Create a
-  copy called `.env` and put your own passwords in here
-  without fear of it being committed to git (see `.env`
-  listed in `.gitignore`). You can also put team related
-  environment variables in here, things like api and signing
-  keys that shouldn't be committed; these should be
-  duplicated in your deployed environments.
+### FastAPI Endpoints
+Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status code is reached.  This will be the Response body.
 
-## How to complete the initial deploy
+##### Log In
 
-There will be further guidance on completing the initial
-deployment, but it just consists of these steps:
+<details>
+<summary markdown="span">GET /token - Get Token</summary>
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNDM5MDA1Mi03YmRjLTRjZjgtYjYxMy0yZWIzY2RhNDczMjUiLCJleHAiOjE3MDcyNjcyNTAsInN1YiI6IlRydXRoSW5UZWNoIiwiYWNjb3VudCI6eyJpZCI6MSwidXNlcm5hbWUiOiJUcnV0aEluVGVjaCIsImZpcnN0X25hbWUiOiJKb2huIiwibGFzdF9uYW1lIjoiRG9lIn19.sOVkWcHazYSqyj1lJsYoMWIlzVJ-c_lQPuKKooHEqC4",
+  "token_type": "Bearer",
+  "account": {
+    "id": 1,
+    "username": "TruthInTech",
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+}
+```
+</details>
 
-### Setup GitLab repo/project
+<details>
+<summary markdown="span">POST /token - Login</summary>
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2YjE0ZDYwNy0xNGM5LTQwNTQtYTMxNC0wMDk3MWQ2NzY1ZWEiLCJleHAiOjE3MDcyNjg4MTMsInN1YiI6IlRydXRoSW5UZWNoIiwiYWNjb3VudCI6eyJpZCI6MSwidXNlcm5hbWUiOiJUcnV0aEluVGVjaCIsImZpcnN0X25hbWUiOiJKb2huIiwibGFzdF9uYW1lIjoiRG9lIn19.XNsTzvb40GxVS8Yi7JMY4GysRA1vRC2n0IbrAz7IDJM",
+  "token_type": "Bearer"
+}
+```
+</details>
 
-- make sure this project is in a group. If it isn't, stop
-  now and move it to a GitLab group
-- remove the fork relationship: In GitLab go to:
+<details>
+<summary markdown="span">DELETE /token - Logout</summary>
+```
+{
+  true
+}
+```
+</details>
 
-  Settings -> General -> Advanced -> Remove fork relationship
+##### Accounts
+<details>
+<summary markdown="span">GET/accounts - Get Account</summary>
+```
+{
+  "id": 1,
+  "username": "TruthinTech",
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "johndoe@gmail.com"
+}
+```
+</details>
 
-- add these GitLab CI/CD variables:
-  - PUBLIC_URL : this is your gitlab pages URL
-  - REACT_APP_API_HOST: enter "blank" for now
+<details>
+<summary markdown="span">PUT/accounts - Update Account</summary>
+```
+{
+  "id": 1,
+  "username": "John_Doe",
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "johndoe@gmail.com"
+}
+```
+</details>
 
-#### Your GitLab pages URL
+<details>
+<summary markdown="span">DELETE/accounts - Delete Account</summary>
+```
+{
+  true
+}
+```
+</details>
 
-You can't find this in GitLab until after you've done a deploy
-but you can figure it out yourself from your GitLab project URL.
+<details>
+<summary markdown="span">POST/accounts - Create Account</summary>
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwYmM2NzI1YS05MWRmLTQ1NTMtOTQ3ZS1kMWJhMWFjOTYwNmQiLCJleHAiOjE3MDcyNjkyMjksInN1YiI6IlRydXRoIiwiYWNjb3VudCI6eyJpZCI6MjAsInVzZXJuYW1lIjoiVHJ1dGgiLCJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSJ9fQ.CzVvSVwx8dCU8OYr36YjO4rIT-FTCP68DFfnKPLahFQ",
+  "token_type": "Bearer",
+  "account": {
+    "id": 1,
+    "username": "TruthinTech",
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+}
+```
+</details>
 
-If this is your project URL
+##### Reviews
+<details>
+<summary markdown="span">POST/reviews - Create Review</summary>
+```
+{
+  "id": 1,
+  "anonymous": false,
+  "salary": 0,
+  "job_title": "student",
+  "location": "remote",
+  "body": "Galvanize helps prepare you for getting a software engineer job through rigorous assessments and projects. Overall would highly recommend becoming a student at Galvanize.",
+  "account_id": 1,
+  "company_id": 1,
+  "date_created": "2024-02-07"
+}
+```
+</details>
 
-https://gitlab.com/GROUP_NAME/PROJECT_NAME
+<details>
+<summary markdown="span">GET/reviews{review_id} - Get One Review</summary>
+```
+{
+  "id": 1,
+  "anonymous": false,
+  "salary": 0,
+  "job_title": "Student",
+  "location": "remote",
+  "body": "Galvanize helps prepare you for getting a software engineer job through rigorous assessments and projects. Overall would highly recommend becoming a student at Galvanize.",
+  "account_id": 1,
+  "company_id": 1,
+  "date_created": "2024-02-07",
+  "company_name": "Galvanize",
+  "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png",
+  "username": "TruthInTech",
+  "first_name": "John",
+  "last_name": "Doe"
+}
+```
+</details>
 
-then your GitLab pages URL will be
+<details>
+<summary markdown="span">PUT/reviews{review_id} - Edit Review</summary>
+```
+{
+  "anonymous": false,
+  "salary": 70000,
+  "job_title": "Software Engineer",
+  "location": "Remote",
+  "body": "After bootcamp I got hired to work remotely as a Software Engineer!"
+}
+```
+</details>
 
-https://GROUP_NAME.gitlab.io/PROJECT_NAME
+<details>
+<summary markdown="span">DELETE/reviews/{review_id} - Delete a Review</summary>
+```
+{
+  true
+}
+```
+</details>
 
-### Initialize CapRover
+<details>
+<summary markdown="span">GET/reviews/companies/{company_id} - Get all reviews from one company</summary>
+```
+[
+  {
+    "id": 1,
+    "anonymous": false,
+    "salary": 7000,
+    "job_title": "Software Engineer",
+    "location": "Remote",
+    "body": "After bootcamp I got hired to work remotely as a Software Engineer!",
+    "account_id": 1,
+    "company_id": 1,
+    "date_created": "2024-02-07",
+    "company_name": "Galvanize",
+    "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png",
+    "username": "TruthInTech",
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+]
+```
+</details>
 
-1. Attain IP address and domain from an instructor
-1. Follow the steps in the CD Cookbook in Learn.
+<details>
+<summary markdown="span">GET/reviews/top10/ - Get Top 10 Reviews</summary>
+```
+This has are 10 hardcoded reviews for our carousel.
+```
+</details>
 
-### Update GitLab CI/CD variables
+##### Companies
+<details>
+<summary markdown="span">GET/reviews/top10 - Get Top 10 Reviews based on how many reviews they have.</summary>
+```
+[
+  {
+    "id": 8,
+    "company_name": "Samsung Electronics",
+    "company_logo": "",
+    "number_of_reviews": 10
+  },
+  {
+    "id": 4,
+    "company_name": "Amazon",
+    "company_logo": "",
+    "number_of_reviews": 10
+  },
+  {
+    "id": 6,
+    "company_name": "Tencent",
+    "company_logo": "",
+    "number_of_reviews": 9
+  },
+  {
+    "id": 1,
+    "company_name": "Google",
+    "company_logo": "",
+    "number_of_reviews": 9
+  },
+  {
+    "id": 7,
+    "company_name": "Tesla",
+    "company_logo": "",
+    "number_of_reviews": 6
+  },
+  {
+    "id": 2,
+    "company_name": "Apple",
+    "company_logo": "",
+    "number_of_reviews": 6
+  },
+  {
+    "id": 10,
+    "company_name": "IBM",
+    "company_logo": "",
+    "number_of_reviews": 2
+  },
+  {
+    "id": 17,
+    "company_name": "Sony",
+    "company_logo": "",
+    "number_of_reviews": 2
+  },
+  {
+    "id": 11,
+    "company_name": "Oracle",
+    "company_logo": "",
+    "number_of_reviews": 2
+  },
+  {
+    "id": 15,
+    "company_name": "Salesforce",
+    "company_logo": "",
+    "number_of_reviews": 2
+  }
+]
+```
+</details>
 
-Copy the service URL for your CapRover service and then paste
-that into the value for the REACT_APP_API_HOST CI/CD variable
-in GitLab.
+<details>
+<summary markdown="span">GET/companies/{company_id} - Get One Company</summary>
+```
+{
+  "id": 1,
+  "company_name": "Galvanize",
+  "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png"
+}
+```
+</details>
 
-### Deploy it
+<details>
+<summary markdown="span">DELETE/companies/{company_id} - Delete Company</summary>
+```
+{
+  true
+}
+```
+</details>
 
-Merge a change into main to kick off the initial deploy. Once the build pipeline
-finishes you should be able to see an "under construction" page on your GitLab
-pages site.
+<details>
+<summary markdown="span">GET/companies - Get Companies</summary>
+```
+{
+  "companies": [
+    {
+      "id": 1,
+      "company_name": "Galvanize",
+      "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png"
+    },
+    {
+      "id": 2,
+      "company_name": "Adobe Inc.",
+      "company_logo": "https://1000logos.net/wp-content/uploads/2021/04/Adobe-logo.png"
+    }
+  ]
+}
+```
+</details>
+
+<details>
+<summary markdown="span">POST/companies - Create Company</summary>
+```
+{
+    "id": 1,
+    "company_name": "Galvanize",
+    "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png"
+}
+```
+</details>
+
+<details>
+<summary markdown="span">PUT/companies/update/{company_id} - Update Company</summary>
+```
+{
+    "id": 1,
+    "company_name": "Hack Reactor",
+    "company_logo": "https://www.galvanize.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-13-at-12.52.26-PM.png"
+}
+```
+</details>
