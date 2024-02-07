@@ -208,7 +208,7 @@ class ReviewRepository:
                         INNER JOIN accounts ON
                             accounts.id = reviews.account_id
                         WHERE company_id = %s
-                        ORDER BY date_created;
+                        ORDER BY date_created DESC;
                         """,
                         [company_id],
                     )

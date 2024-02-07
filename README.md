@@ -1,72 +1,82 @@
 # Truth in Tech
-The Website
-https://truth-in-tech.gitlab.io/truth-in-tech/
 
-The Team
-Adedeji "Toon" Adetunji - Software Developer
-Matt Archbold - Software Developer
-Cory Egan - Software Developer
-Zach Walkowiak - Software Developer
-![alt text](<docs/Truth In Tech Logo.png>)
+The Website
+
+- https://truth-in-tech.gitlab.io/truth-in-tech/
+
+**The Team**
+
+- Adedeji "Toon" Adetunji | [LinkedIn] (https://www.linkedin.com/in/adedeji-adetunji-900452290/)
+- Matt Archbold | [LinkedIn] (https://www.linkedin.com/in/matt-archbold-690a56278/)
+- Cory Egan | [LinkedIn] (https://www.linkedin.com/in/cory-egan-a980378b/)
+- Zach Walkowiak | [LinkedIn] (https://www.linkedin.com/in/zachary-walkowiak-8384a31b5/)
+
+  ![alt text](<docs/Truth In Tech Logo.png>)
 
 ## What is Truth in Tech?
 
-"Truth in Tech" is a platform dedicated to providing unbiased and informative reviews about technology companies.  This helps our users to make informed decisions about their career choices and work environments.  This website is intended for anyone who is currently in or interested in breaking into the Technology career field.
+"Truth in Tech" is a platform dedicated to providing unbiased and informative reviews about technology companies. This helps our users to make informed decisions about their career choices and work environments. This website is intended for anyone who is currently in or interested in breaking into the Technology career field.
 
 ## Project Initialization
 
 1. In your terminal make sure you are in the directory you want to clone the project into.
 2. Clone the repository typing:
-      git clone https://gitlab.com/truth-in-tech/truth-in-tech.git
-3. Switch into the your project directory by typing cd truth-in-tech
-4. Run docker volume create truth-in-tech-data
-5. Run docker compose build
-6. Run docker compose up
+   ```git clone https://gitlab.com/truth-in-tech/truth-in-tech.git```
+3. Switch into the your project directory by typing ```cd truth-in-tech```
+4. Run ```docker volume create truth-in-tech-data```
+5. Run ```docker compose build```
+6. Run ```docker compose up```
+7. Now you should see 3 containers up and running locally in your Docker Desktop. Your fastapi, postgres, and ghi containers.
+8. To view the backend functionality go to http://localhost:8000/docs
+9. To view the frontend functionality go to http://localhost:3000
 
-Now you should see 3 containers up and running locally in your Docker Desktop.
-7. To view the backend functionality go to http://localhost:8000/docs
-8. To view the frontend functionality go to http://localhost:3000
+## Design
 
-# Design
+### Our Wireframe
 
-## Functionality through React Routes
+![alt text](<docs/Wireframe Truth In Tech.png>)
+As you can see we have the beginning design of our webpages and database tables that you can find in our migrations folder.
 
-# Home Page http://localhost:3000
-  - Here you can see our top ten companies reviewed.  A carousel of excellent reviews.  Also a button to create your own review.
-  ![alt text](<ghi/public/image.png)
-# Login/Logout http://localhost:3000
-  - Through our Navigation Bar you can log in and out of an account.
+### Functionality through React Routes
 
-# Create Account http://localhost:3000/accounts/create
-  - Here you can create an account with a user name, first name, last name, email, and password.  This will automatically give you an Avatar picture as well.
+- **Home Page** http://localhost:3000
+- Here you can see our top ten companies reviewed. A carousel of excellent reviews. Also a button to create your own review.
+  ![alt text](<docs/homepage.png>)
+- **Login/Logout** http://localhost:3000
+- Through our Navigation Bar you can log in and out of an account.
 
-# Account Page http://localhost:3000/accounts/update
+- **Create Account** http://localhost:3000/accounts/create
+- Here you can create an account with a user name, first name, last name, email, and password. This will automatically give you an Avatar picture as well.
+
+- **Account Page** http://localhost:3000/accounts/update
+
   - Here you can edit your account page.
-  ![alt text](<ghi/public/image-2.png)
+    ![alt text](<docs/accountsupdate.png>)
 
-# Create a Company http://localhost:3000/Comanies/create
+- **Create a Company** http://localhost:3000/Companies/create
+
   - On this page you can create a Company if you have an account.
-  ![alt text](<ghi/public/image-4.png)
+    ![alt text](<docs/companiescreate.png>)
 
-# Create a Review http://localhost:3000/reviews/create
-- We built a page where you can Anonymously post a review.  You can only post a review when you have an account.
-  ![alt text](<ghi/public/image-5.png)
+- **Create a Review** http://localhost:3000/reviews/create
+- We built a page where you can Anonymously post a review. You can only post a review when you have an account.
+  ![alt text](<docs/reviewscreate.png>)
 
-# Company List Page http://localhost:3000/Companies/list
-- Functionality in this page shows all of our companies with their logos and has a button in order to write a review for a specific company.  If you click on the company name it will take you to that company's page.
-![alt text](<ghi/public/image-6.png)
+- **Company List Page** http://localhost:3000/Companies/list
+- Functionality in this page shows all of our companies with their logos and has a button in order to write a review for a specific company. If you click on the company name it will take you to that company's page.
+  ![alt text](<docs/companieslist.png>)
 
-# Company Page http://localhost:3000/reviews/id
-- Here we can see all the reviews for one company.  If there are no reviews for a company you will get a sad face.
-![alt text](<ghi/public/image-7.png)
+- **Company Page** http://localhost:3000/reviews/id
+- Here we can see all the reviews for one company. If there are no reviews for a company you will get a sad face.
+  ![alt text](<docs/reviewsid.png>)
 
-# Check out a Review http://localhost:3000/review/id
+- **Check out a Review** http://localhost:3000/review/id
 - We built this page to show one specific review for a company.
-![alt text](<ghi/public/image-9.png)
-
+  ![alt text](<docs/reviewid.png>)
 
 ### FastAPI Endpoints
-Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status code is reached.  This will be the Response body.
+
+Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status code is reached. This will be the Response body. You can check these endpoints out at http://localhost:8000/docs
 
 ##### Log In
 
@@ -106,6 +116,7 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
 </details>
 
 ##### Accounts
+
 <details>
 <summary markdown="span">GET/accounts - Get Account</summary>
 ```
@@ -158,6 +169,7 @@ Here are all of the FastAPI Endpoints for Truth in Tech when a 200 OK status cod
 </details>
 
 ##### Reviews
+
 <details>
 <summary markdown="span">POST/reviews - Create Review</summary>
 ```
@@ -251,6 +263,7 @@ This has are 10 hardcoded reviews for our carousel.
 </details>
 
 ##### Companies
+
 <details>
 <summary markdown="span">GET/reviews/top10 - Get Top 10 Reviews based on how many reviews they have.</summary>
 ```
