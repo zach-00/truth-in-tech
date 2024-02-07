@@ -1,14 +1,29 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import Card from 'react-bootstrap/Card';
+import { useNavigate } from 'react-router-dom';
 
 
 function Review() {
 
     let {id} = useParams()
-
+    const {token} = useAuthContext()
     const [review, setReview] = useState({});
-    
+    const [username, setUsername] = useState('')
+    const navigate = useNavigate()
+
+    const fetchToken = async () => {
+        const tkn = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
+            credentials: 'include'
+        })
+
+        const response = await tkn.json()
+        setUsername(response.account.username)
+    }
+
+
+
     useEffect(() => {
         async function getReview() {
 
@@ -22,7 +37,25 @@ function Review() {
         }
 
         getReview();
-    }, [id]);
+        fetchToken();
+    }, [id, token]);
+
+    const deleteReview = async () => {
+        const url = `${process.env.REACT_APP_API_HOST}/reviews/${id}`
+        const fetchConfig = {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        }
+        const response = await fetch(url, fetchConfig)
+
+        if (response.ok) {
+            console.log(review.company_id)
+            navigate(`/reviews/${review.company_id}`)
+        }
+    }
 
 
     return (
@@ -46,6 +79,11 @@ function Review() {
                     <Card.Text>
                         {review.body}
                     </Card.Text>
+                    {username===review.username ?
+                    <button type="button" className="btn btn-danger" onClick={deleteReview} >Delete</button>
+                    : ""
+                    }
+
                 </Card.Body>
             </Card>
         </div>
