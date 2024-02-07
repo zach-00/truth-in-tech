@@ -62,7 +62,6 @@ function CreateReview() {
 
     const fetchCompanies = async (e) => {
         const url = `${process.env.REACT_APP_API_HOST}/companies`;
-
         try {
             const response = await fetch(url);
 
@@ -70,6 +69,7 @@ function CreateReview() {
                 const data = await response.json();
                 setCompanies(data.companies);
             }
+
         } catch (err) {
             console.error(err);
             }

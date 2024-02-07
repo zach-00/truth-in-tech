@@ -38,9 +38,7 @@ const CreateCompanyForm = () => {
       }
 
         if (response.ok){
-            const data = await response.json();
-            console.log('Company created:', data);
-
+            await response.json();
             setCompanyName('');
             setCompanyLogo('')
         }

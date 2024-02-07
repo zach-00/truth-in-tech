@@ -93,8 +93,7 @@ const UpdateAccountForm = () => {
       }
 
         if (response.ok){
-            const data = await response.json();
-            console.log('Account updated:', data);
+            await response.json();
         }
 
     } catch (error) {

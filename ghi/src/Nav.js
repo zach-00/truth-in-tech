@@ -8,7 +8,8 @@ import LogoutButton from "./logout.js";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import Avvvatars from 'avvvatars-react'
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
+
 
 
 function CustomNav() {
@@ -36,7 +37,7 @@ function CustomNav() {
     <>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href={'/'}>TruthInTech</Navbar.Brand>
+        <Navbar.Brand as={Link} to={'/'}>TruthInTech</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-wrap space-between">

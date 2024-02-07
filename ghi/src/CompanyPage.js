@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
+import { Link } from "react-router-dom";
 
 function CompanyPage() {
   const [reviews, setReviews] = useState([]);
@@ -31,7 +32,6 @@ function CompanyPage() {
           company_logo:
             "https://upload.wikimedia.org/wikipedia/commons/3/37/Sad-face.png",
         };
-  console.log(reviews);
 
   return (
     <>
@@ -63,7 +63,7 @@ function CompanyPage() {
                   {review.location}
                 </Card.Subtitle>
                 <Card.Text>{review.body}</Card.Text>
-                <Card.Link href={`/review/${review.id}`}>
+                <Card.Link as={Link} to={`/review/${review.id}`}>
                   Check this review out
                 </Card.Link>
               </Card.Body>

@@ -13,10 +13,8 @@ const LogoutButton = () => {
         e.preventDefault();
 
         try {
-            console.log('Logging out...');
             await logout();
             goToHomePage();
-            console.log('Logout successful');
 
 
         } catch (error) {
