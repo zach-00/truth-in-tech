@@ -36,3 +36,19 @@ code {
   text-decoration: underline;
   color: red;
 }
+
+.max {
+  width: max-content;
+}
+
+.form-padding {
+  padding: 0.5rem;
+}
+
+.white-font {
+  color: white;
+}
+
+#login-button {
+  color: white;
+}
