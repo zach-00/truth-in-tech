@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
 
 
 function CompaniesList() {
@@ -54,7 +52,6 @@ function CompaniesList() {
                 aria-label="Search"
                 onChange={handleFilter}
                 />
-                <Button variant="outline-success">Search</Button>
             </Form>
             <table className="table table-striped" margin-left="auto">
                 <thead>
