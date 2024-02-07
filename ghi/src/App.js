@@ -19,9 +19,9 @@ function App() {
   const baseUrl = process.env.REACT_APP_API_HOST;
   return (
     <BrowserRouter basename={basename}>
-      <div className="container">
         <AuthProvider baseUrl={baseUrl}>
           <CustomNav />
+      <div className="container-fluid">
           <Routes>
 
             <Route index element={<MainPage/>} />
@@ -44,9 +44,9 @@ function App() {
             </Route>
 
           </Routes>
-          <Footer />
-        </AuthProvider>
       </div>
+        </AuthProvider>
+          <Footer />
     </BrowserRouter>
   );
 }
