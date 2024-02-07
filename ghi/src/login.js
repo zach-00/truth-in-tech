@@ -1,7 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from 'react';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
