@@ -21,7 +21,7 @@ function App() {
     <BrowserRouter basename={basename}>
         <AuthProvider baseUrl={baseUrl}>
           <CustomNav />
-      <div className="container-fluid">
+        <div className="container-fluid">
           <Routes>
 
             <Route index element={<MainPage/>} />
@@ -44,7 +44,7 @@ function App() {
             </Route>
 
           </Routes>
-      </div>
+        </div>
         </AuthProvider>
           <Footer />
     </BrowserRouter>
