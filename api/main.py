@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from authenticator import authenticator
-from routers import accounts, companies, reviews
+from routers import accounts, companies, reviews, comments
 
 app = FastAPI()
 
@@ -21,6 +21,8 @@ app.include_router(accounts.router)
 app.include_router(reviews.router)
 
 app.include_router(companies.router)
+
+app.include_router(comments.router)
 
 
 @app.get("/")
