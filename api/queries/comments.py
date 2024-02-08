@@ -14,12 +14,8 @@ class CommentIn(BaseModel):
     review_id: int
 
 
-# class ReviewInUpdate(BaseModel):
-#     anonymous: bool
-#     salary: Optional[int]
-#     job_title: str
-#     location: Optional[str]
-#     body: str
+class CommentInUpdate(BaseModel):
+    body: str
 
 
 class CommentOutPlus(BaseModel):
@@ -150,69 +146,50 @@ class CommentRepository:
                 detail=str(e),
             )
 
-    # def update_review(
-    #     self, review_id: int, review: ReviewInUpdate, account_id: int
-    # ):
-    #     try:
-    #         with pool.connection() as conn:
-    #             with conn.cursor() as db:
-    #                 result = db.execute(
-    #                     """
-    #                     UPDATE reviews
-    #                     SET anonymous = %s,
-    #                         salary = %s,
-    #                         job_title = %s,
-    #                         location = %s,
-    #                         body = %s
-    #                     WHERE id = %s
-    #                     AND account_id = %s
-    #                     RETURNING id,
-    #                         anonymous,
-    #                         salary,
-    #                         job_title,
-    #                         location,
-    #                         body,
-    #                         account_id,
-    #                         company_id,
-    #                         date_created;
-    #                     """,
-    #                     [
-    #                         review.anonymous,
-    #                         review.salary,
-    #                         review.job_title,
-    #                         review.location,
-    #                         review.body,
-    #                         review_id,
-    #                         account_id,
-    #                     ],
-    #                 )
-    #                 (
-    #                     id,
-    #                     anonymous,
-    #                     salary,
-    #                     job_title,
-    #                     location,
-    #                     body,
-    #                     account_id,
-    #                     company_id,
-    #                     date_created,
-    #                 ) = result.fetchone()
-    #                 return ReviewOut(
-    #                     id=id,
-    #                     anonymous=anonymous,
-    #                     salary=salary,
-    #                     job_title=job_title,
-    #                     location=location,
-    #                     body=body,
-    #                     account_id=account_id,
-    #                     company_id=company_id,
-    #                     date_created=date_created,
-    #                 )
-    #     except Exception as e:
-    #         raise HTTPException(
-    #             status_code=400,
-    #             detail=str(e),
-    #         )
+    def update_comment(
+        self,
+        comment: CommentInUpdate,
+        comment_id: int,
+        account_id: int,
+    ):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE comments
+                        SET body = %s
+                        WHERE id = %s
+                        AND account_id = %s
+                        RETURNING
+                            id,
+                            body,
+                            account_id,
+                            review_id,
+                            date_created;
+                        """,
+                        [comment.body, comment_id, account_id],
+                    )
+                    (
+                        id,
+                        body,
+                        account_id,
+                        review_id,
+                        date_created,
+                    ) = result.fetchone()
+                    print(result)
+                    return CommentOut(
+                        id=id,
+                        body=body,
+                        account_id=account_id,
+                        review_id=review_id,
+                        date_created=date_created,
+                    )
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
 
     def delete_review(self, comment_id: int, account_id: int):
         try:

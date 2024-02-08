@@ -1,14 +1,12 @@
-from fastapi import (
-    APIRouter,
-    Depends,
-)
+from fastapi import APIRouter, Depends
 
 from typing import List
 from queries.comments import (
     CommentIn,
     CommentOut,
     CommentOutPlus,
-    CommentRepository
+    CommentRepository,
+    CommentInUpdate,
 )
 
 from authenticator import authenticator
@@ -36,17 +34,17 @@ def get_review_comments(
     return repo.get_all(review_id)
 
 
-# @router.put("/reviews/{review_id}", response_model=Union[ReviewOut, Error])
-# async def update_review(
-#     review_id: int,
-#     review: ReviewInUpdate,
-#     repo: ReviewRepository = Depends(),
-#     account_info: dict = Depends(authenticator.get_current_account_data),
-# ):
-#     return repo.update_review(review_id, review, account_info["id"])
+@router.put("/comments/{comment_id}", response_model=CommentOut)
+async def update_comment(
+    comment: CommentInUpdate,
+    comment_id: int,
+    repo: CommentRepository = Depends(),
+    account_info: dict = Depends(authenticator.get_current_account_data),
+):
+    return repo.update_comment(comment, comment_id, account_info["id"])
 
 
-@router.delete("/reviews/{review_id}/{comment_id}")
+@router.delete("/comments/{comment_id}")
 def delete_comment(
     comment_id,
     account_info: dict = Depends(authenticator.get_current_account_data),
