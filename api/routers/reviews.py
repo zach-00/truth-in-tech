@@ -52,6 +52,14 @@ def get_top_10_reviews(repo: ReviewRepository = Depends()):
     return repo.get_top_10_reviews()
 
 
+@router.put("/reviews/{review_id}/like")
+def add_like(
+    review_id: int,
+    repo: ReviewRepository = Depends(),
+):
+    return repo.add_like(review_id)
+
+
 @router.put("/reviews/{review_id}", response_model=Union[ReviewOut, Error])
 async def update_review(
     review_id: int,

@@ -36,6 +36,7 @@ class ReviewOutPlus(BaseModel):
     account_id: int
     company_id: int
     date_created: date
+    likes: int
     company_name: str
     company_logo: str
     username: str
@@ -68,7 +69,7 @@ class ReviewOut10(BaseModel):
 
 
 class ReviewRepository:
-    def create(self, review: ReviewIn, account_id: int) -> ReviewOut:
+    def create(self, review: ReviewIn, account_id: int) -> ReviewOutPlus:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -130,11 +131,12 @@ class ReviewRepository:
                         account_id=review[6],
                         company_id=review[7],
                         date_created=review[8],
-                        company_name=review[9],
-                        company_logo=review[10],
-                        username=review[11],
-                        first_name=review[12],
-                        last_name=review[13],
+                        likes=review[9],
+                        company_name=review[10],
+                        company_logo=review[11],
+                        username=review[12],
+                        first_name=review[13],
+                        last_name=review[14],
                     )
                     return r
         except Exception as e:
@@ -143,7 +145,7 @@ class ReviewRepository:
                 detail=str(e),
             )
 
-    def get_one_review(self, review_id: int) -> ReviewOut:
+    def get_one_review(self, review_id: int) -> ReviewOutPlus:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -177,11 +179,12 @@ class ReviewRepository:
                         account_id=review[6],
                         company_id=review[7],
                         date_created=review[8],
-                        company_name=review[9],
-                        company_logo=review[10],
-                        username=review[11],
-                        first_name=review[12],
-                        last_name=review[13],
+                        likes=review[9],
+                        company_name=review[10],
+                        company_logo=review[11],
+                        username=review[12],
+                        first_name=review[13],
+                        last_name=review[14],
                     )
         except Exception as e:
             raise HTTPException(
@@ -213,6 +216,7 @@ class ReviewRepository:
                         [company_id],
                     )
                     record = result.fetchall()
+                    print(record)
                     reviews = []
                     for review in record:
                         r = ReviewOutPlus(
@@ -225,11 +229,12 @@ class ReviewRepository:
                             account_id=review[6],
                             company_id=review[7],
                             date_created=review[8],
-                            company_name=review[9],
-                            company_logo=review[10],
-                            username=review[11],
-                            first_name=review[12],
-                            last_name=review[13],
+                            likes=review[9],
+                            company_name=review[10],
+                            company_logo=review[11],
+                            username=review[12],
+                            first_name=review[13],
+                            last_name=review[14],
                         )
                         reviews.append(r)
                     return reviews
@@ -347,6 +352,26 @@ class ReviewRepository:
                         RETURNING id;
                         """,
                         [review_id, account_id],
+                    )
+
+                    if result.fetchone()[0]:
+                        return True
+
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
+
+    def add_like(self, review_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE reviews
+                        SET likes = likes + 1
+                        WHERE id = %s
+                        RETURNING id;
+                        """,
+                        [review_id],
                     )
 
                     if result.fetchone()[0]:

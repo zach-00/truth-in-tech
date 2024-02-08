@@ -1,6 +1,6 @@
 steps = [
     [
-    """
+        """
     CREATE TABLE comments(
     id SERIAL PRIMARY KEY NOT NULL,
     body TEXT,
@@ -9,7 +9,7 @@ steps = [
     date_created TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP
     );
     """,
-    """
+        """
     DROP TABLE comments;
     """,
     ],
