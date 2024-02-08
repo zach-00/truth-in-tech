@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from './images/Truth-In-Tech-Logo.png';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
@@ -139,7 +140,7 @@ function MainPage() {
 
                     <Col className="padding">
                         <Card border="primary" style={{ width: '20rem' }}>
-                            <Card.Img variant="top" src="Truth-In-Tech-Logo.png" />
+                            <Card.Img variant="top" src={logo} />
                             <Card.Body>
                                 <Card.Title>Share your experience!</Card.Title>
                                 <Card.Text>

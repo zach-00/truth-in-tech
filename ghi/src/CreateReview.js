@@ -79,6 +79,7 @@ function CreateReview() {
     useEffect(() => {
         fetchCompanies();
         fetchToken();
+        setTriedSubmit(false);
     }, [token]);
 
     const handleSubmit = async (e) => {
