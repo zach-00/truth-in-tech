@@ -113,11 +113,11 @@ function MainPage() {
 
                     <Col className="padding" xs={6} >
                         <h2 className="text-center">Featured Reviews</h2>
-                        <Carousel className="carousel-inner text-center" activeIndex={index} onSelect={handleSelect}>
+                        <Carousel className="carousel-inner text-center padding-top" activeIndex={index} onSelect={handleSelect}>
                             {reviews.map((review, index) => {
                                 return (
                                 <Carousel.Item key={index}>
-                                    <Image src={review.company_logo} width="50%" alt=""/>
+                                    <Image className="padding-pic" src={review.company_logo} width="50%" alt=""/>
                                     <Carousel.Caption>
                                     </Carousel.Caption>
                                         <Card className="offset-2" style={{ width: '27rem' }}>

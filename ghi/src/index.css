@@ -52,3 +52,11 @@ code {
 #login-button {
   color: white;
 }
+
+.padding-top {
+  padding-top: 2rem;
+}
+
+.padding-pic {
+  padding-bottom: 1rem;
+}
