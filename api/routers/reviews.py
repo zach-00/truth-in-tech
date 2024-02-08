@@ -56,6 +56,7 @@ def get_top_10_reviews(repo: ReviewRepository = Depends()):
 def add_like(
     review_id: int,
     repo: ReviewRepository = Depends(),
+    account_info: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.add_like(review_id)
 
