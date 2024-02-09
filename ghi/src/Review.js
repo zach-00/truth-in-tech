@@ -199,7 +199,10 @@ function Review() {
           </>
           <br></br>
           <br></br>
-          <h2>Comments</h2>
+          {comments.length
+          ? <h2>Comments</h2>
+          : null
+          }
           {comments.map((comment, index) => {
                 return (
                     <Fragment key={index}>
