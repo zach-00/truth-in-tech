@@ -39,11 +39,8 @@ class CommentOut(BaseModel):
 
 class CommentRepository:
     def create(
-            self,
-            comment: CommentIn,
-            review_id: int,
-            account_id: int
-            ) -> CommentOut:
+        self, comment: CommentIn, review_id: int, account_id: int
+    ) -> CommentOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

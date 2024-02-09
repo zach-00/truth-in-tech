@@ -19,20 +19,12 @@ function CompanyPage() {
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         setReviews(data);
       }
     }
-    getReviews(id);
+    getReviews(id)
   }, [id]);
-
-  const companyInfo =
-    reviews.length > 0
-      ? reviews[0]
-      : {
-          company_name: "There are no reviews for this company yet... ",
-          company_logo:
-            "https://upload.wikimedia.org/wikipedia/commons/3/37/Sad-face.png",
-        };
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -75,29 +67,62 @@ function CompanyPage() {
       <div className="row">
         <div className="offset-2 col-6">
           <div>
-            <h1>
-              {companyInfo.company_name} <br></br>{" "}
-              <Badge bg="secondary">Reviews</Badge>
-            </h1>
+            {reviews.length ? (
+              <>
+                <h1>
+                  {reviews[0].company_name}
+                  <br></br>
+                  <Badge bg="secondary">Reviews</Badge>
+                </h1>
+                <br></br>
+              </>
+            ) : (
+              <>
+                <h1>
+                  <Badge bg="secondary">Reviews</Badge>
+                  <p>There are no reviews for this company yet.......</p>
+                </h1>
+              </>
+            )}
           </div>
-            <div className="input-group">
-                <input
-                  type="search"
-                  placeholder="Search (use lowercase)..."
-                  className="form-control"
-                  value={searchQuery}
-                  onChange={handleSearchInputChange}
-                />
-            </div>
+          <div className="input-group">
+            <input
+              type="search"
+              placeholder="Search (use lowercase)..."
+              className="form-control"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            />
+          </div>
           <div>
-            <br></br>
-            <Container>
-              <Row>
-                <Col xs={6} md={4}>
-                  <Image src={`${companyInfo.company_logo}`} thumbnail />
-                </Col>
-              </Row>
-            </Container>
+            {reviews.length ? (
+              <>
+                <br></br>
+                <Container>
+                  <Row>
+                    <Col xs={6} md={4}>
+                      <Image src={reviews[0].company_logo} thumbnail />
+                    </Col>
+                  </Row>
+                </Container>
+              </>
+            ) : (
+              <>
+                <br></br>
+                <Container>
+                  <Row>
+                    <Col xs={6} md={4}>
+                      <Image
+                        src={
+                          "https://upload.wikimedia.org/wikipedia/commons/3/37/Sad-face.png"
+                        }
+                        thumbnail
+                      />
+                    </Col>
+                  </Row>
+                </Container>
+              </>
+            )}
             <br></br>
             {filteredReviews.map((review) => (
               <div key={review.id}>
