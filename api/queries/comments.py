@@ -178,7 +178,6 @@ class CommentRepository:
                         review_id,
                         date_created,
                     ) = result.fetchone()
-                    print(result)
                     return CommentOut(
                         id=id,
                         body=body,
