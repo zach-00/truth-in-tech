@@ -5,7 +5,7 @@ steps = [
     id SERIAL PRIMARY KEY NOT NULL,
     body TEXT,
     account_id INTEGER REFERENCES accounts(id),
-    review_id INTEGER REFERENCES reviews(id),
+    review_id INTEGER REFERENCES reviews(id) ON DELETE CASCADE,
     date_created TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP
     );
     """,

@@ -57,12 +57,10 @@ function CompaniesList() {
                 <thead>
                     <tr>
                         <th>Company</th>
-                        <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filter.map( (company) => {
+                    {filter.map(company => {
                         return (
                             <tr key={company.id}>
                                 <td className="nav-item">
@@ -71,16 +69,16 @@ function CompaniesList() {
                                 <td className="text-center">
                                     <img
                                     alt=""
-                                    src = {`${company.company_logo}`}
-                                    className = "img-thumbnail" width="10%"
+                                    src={`${company.company_logo}`}
+                                    className="img-thumbnail" width="10%"
                                     />
                                 </td>
                                 <td>
                                     <button type="button" id={company.id} onClick={() => writeReview(company.id)} className="btn btn-success">Write a Review</button>
                                 </td>
                             </tr>
-                        )
-                    })};
+                        );
+                    })}
                 </tbody>
             </table>
         </div>

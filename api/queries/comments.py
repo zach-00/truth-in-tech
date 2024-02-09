@@ -11,7 +11,6 @@ class Error(BaseModel):
 
 class CommentIn(BaseModel):
     body: str
-    review_id: int
 
 
 class CommentInUpdate(BaseModel):
@@ -39,7 +38,12 @@ class CommentOut(BaseModel):
 
 
 class CommentRepository:
-    def create(self, comment: CommentIn, account_id: int) -> CommentOut:
+    def create(
+            self,
+            comment: CommentIn,
+            review_id: int,
+            account_id: int
+            ) -> CommentOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -56,7 +60,7 @@ class CommentRepository:
                         [
                             comment.body,
                             account_id,
-                            comment.review_id,
+                            review_id,
                         ],
                     )
                     record = result.fetchone()

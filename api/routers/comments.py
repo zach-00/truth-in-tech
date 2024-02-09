@@ -17,10 +17,11 @@ router = APIRouter()
 @router.post("/reviews/{review_id}/comments", response_model=CommentOut)
 async def create_comment(
     comment: CommentIn,
+    review_id: int,
     repo: CommentRepository = Depends(),
     account_info: dict = Depends(authenticator.get_current_account_data),
 ):
-    result = repo.create(comment, account_info["id"])
+    result = repo.create(comment, review_id, account_info["id"])
     return result
 
 

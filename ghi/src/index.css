@@ -60,3 +60,7 @@ code {
 .padding-pic {
   padding-bottom: 1rem;
 }
+
+.header {
+  justify-content: space-between;
+}
