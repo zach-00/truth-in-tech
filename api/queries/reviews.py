@@ -216,7 +216,6 @@ class ReviewRepository:
                         [company_id],
                     )
                     record = result.fetchall()
-                    print(record)
                     reviews = []
                     for review in record:
                         r = ReviewOutPlus(
@@ -254,7 +253,6 @@ class ReviewRepository:
                         """,
                     )
                     reviews = result.fetchall()
-                    print(reviews)
                     top_10_list = []
                     for i in reviews:
                         review = ReviewOut10(
