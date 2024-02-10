@@ -70,3 +70,18 @@ Currently working on:
 	Home page
 	Nav bar
 	Single review page
+
+
+2/2/24 - 2/9/24
+Team completed our MVP this week and we started are stretch goals.
+Project was presented on 2/9/24.
+
+The week was full of merging front end pages and adding bootstrap to our project.
+Search bars, Nav bars were among the visual and functional improvements.
+We mob coding our front end deployment.
+We updated our README.
+
+We added a comments and a like table in our migrations.
+We have functional comments for our reviews that we presented.
+Overall we are satisfied with how our website looks and is functioning but all
+have stretch goals that we are continuing with in order to learn more!
