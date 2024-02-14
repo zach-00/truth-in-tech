@@ -42,6 +42,7 @@ class ReviewOutPlus(BaseModel):
     username: str
     first_name: str
     last_name: str
+    liked_id: Union[None, int]
 
 
 class ReviewOut(BaseModel):
@@ -69,7 +70,7 @@ class ReviewOut10(BaseModel):
 
 
 class ReviewRepository:
-    def create(self, review: ReviewIn, account_id: int) -> ReviewOutPlus:
+    def create(self, review: ReviewIn, account_id: int) -> ReviewOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -204,13 +205,16 @@ class ReviewRepository:
                             companies.company_logo,
                             accounts.username,
                             accounts.first_name,
-                            accounts.last_name
+                            accounts.last_name,
+                            likes.account_id AS liked_id
                         FROM reviews
                         INNER JOIN companies ON
                             companies.id = reviews.company_id
                         INNER JOIN accounts ON
                             accounts.id = reviews.account_id
-                        WHERE company_id = %s
+                        LEFT JOIN likes ON
+                            reviews.id = likes.review_id
+                        WHERE reviews.company_id = %s
                         ORDER BY reviews.id DESC;
                         """,
                         [company_id],
@@ -234,6 +238,7 @@ class ReviewRepository:
                             username=review[12],
                             first_name=review[13],
                             last_name=review[14],
+                            liked_id=review[15],
                         )
                         reviews.append(r)
                     return reviews
@@ -372,6 +377,30 @@ class ReviewRepository:
                         [review_id],
                     )
 
+                    if result.fetchone()[0]:
+                        return True
+
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
+
+    def like_relation(self, review_id: int, account_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        INSERT INTO likes
+                            (account_id,
+                            review_id)
+                        VALUES
+                            (%s, %s)
+                            RETURNING id;
+                        """,
+                        [
+                            account_id,
+                            review_id,
+                        ],
+                    )
                     if result.fetchone()[0]:
                         return True
 

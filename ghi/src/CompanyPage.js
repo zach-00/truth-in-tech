@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
@@ -7,11 +7,26 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function CompanyPage() {
-  const [reviews, setReviews] = useState([]);
+  const {token} = useAuthContext()
   const { id } = useParams();
+  const [reviews, setReviews] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [ rerender, setRerender ] = useState(1);
+  const [userID, setID] = useState();
+  const [likedReviews, setLikedReviews] = useState([]);
+
+  const fetchToken = async () => {
+    const tkn = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
+        credentials: 'include'
+    })
+
+    const response = await tkn.json()
+    setID(response.account.id)
+  }
 
   useEffect(() => {
     async function getReviews() {
@@ -19,11 +34,33 @@ function CompanyPage() {
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        setReviews(data);
+        const single_review = []
+        const i_id = []
+        const likedReviewsID = []
+
+        for (let i in data) {
+
+
+          if (!i_id.includes(data[i].id)) {
+          i_id.push(data[i].id)
+          single_review.push(data[i])
+          }
+
+          if (data[i].liked_id === userID) {
+            likedReviewsID.push(data[i].id)
+          }
+        }
+
+        setReviews(single_review);
+        setLikedReviews(likedReviewsID)
+        setRerender(2)
       }
+
     }
-    getReviews(id)
-  }, [id]);
+
+    getReviews(id);
+    fetchToken();
+  }, [id, rerender, userID]);
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -60,6 +97,37 @@ function CompanyPage() {
 
     return false;
   });
+
+  async function addLike(review_id) {
+    const url = `${process.env.REACT_APP_API_HOST}/reviews/${review_id}/like`
+    const fetchConfig = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    }
+    const response = await fetch(url, fetchConfig)
+
+    if (response.ok) {
+      const like_url = `${process.env.REACT_APP_API_HOST}/like/${review_id}`
+
+      const likeFetchConfig = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      }
+
+      const likeResponse = await fetch(like_url, likeFetchConfig)
+
+      if (likeResponse.ok) {
+        setRerender(3)
+      }
+    }
+  }
+
 
   return (
     <>
@@ -138,6 +206,19 @@ function CompanyPage() {
                     <Card.Link as={Link} to={`/review/${review.id}`}>
                       Check this review out
                     </Card.Link>
+                      { token && (!likedReviews.includes(review.id)) ?
+                          <div className="d-flex flex-row-reverse">
+                            <Button variant="primary" onClick={() => addLike(review.id)}>
+                              <i className="bi bi-heart">{review.likes}</i>
+                            </Button>
+                          </div>
+                      :
+                          <div className="d-flex flex-row-reverse">
+                          <Button disabled variant="primary" onClick={() => addLike(review.id)}>
+                              <i className="bi bi-heart">{review.likes}</i>
+                            </Button>
+                          </div>
+                      }
                   </Card.Body>
                 </Card>
                 <br></br>
@@ -149,5 +230,6 @@ function CompanyPage() {
     </>
   );
 }
+
 
 export default CompanyPage;

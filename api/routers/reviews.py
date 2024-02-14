@@ -61,6 +61,15 @@ def add_like(
     return repo.add_like(review_id)
 
 
+@router.post("/like/{review_id}")
+def like_relation(
+    review_id: int,
+    repo: ReviewRepository = Depends(),
+    account_info: dict = Depends(authenticator.get_current_account_data),
+):
+    return repo.like_relation(review_id, account_info["id"])
+
+
 @router.put("/reviews/{review_id}", response_model=Union[ReviewOut, Error])
 async def update_review(
     review_id: int,
