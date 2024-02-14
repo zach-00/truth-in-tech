@@ -18,6 +18,7 @@ function CompanyPage() {
   const [ rerender, setRerender ] = useState(1);
   const [userID, setID] = useState();
   const [likedReviews, setLikedReviews] = useState([]);
+  const [company, setCompany] = useState('');
 
   const fetchToken = async () => {
     const tkn = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
@@ -29,6 +30,16 @@ function CompanyPage() {
   }
 
   useEffect(() => {
+
+    const fetchCompany = async () => {
+      const url = `${process.env.REACT_APP_API_HOST}/companies/${id}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const company = await response.json();
+        setCompany(company);
+      }
+    }
+
     async function getReviews() {
       const url = `${process.env.REACT_APP_API_HOST}/reviews/companies/${id}`;
       const response = await fetch(url);
@@ -59,6 +70,7 @@ function CompanyPage() {
     }
 
     getReviews(id);
+    fetchCompany();
     fetchToken();
   }, [id, rerender, userID]);
 
@@ -137,7 +149,7 @@ function CompanyPage() {
             {reviews.length ? (
               <>
                 <h1>
-                  {reviews[0].company_name}
+                  {company.company_name}
                   <br></br>
                   <Badge bg="secondary">Reviews</Badge>
                 </h1>
@@ -147,11 +159,23 @@ function CompanyPage() {
               <>
                 <h1>
                   <Badge bg="secondary">Reviews</Badge>
-                  <p>There are no reviews for this company yet.......</p>
+                  <p>{`There are no reviews for ${company.company_name} yet...`}</p>
                 </h1>
               </>
             )}
           </div>
+
+              <>
+                <Container>
+                  <Row>
+                    <Col xs={6} md={4}>
+                      <Image src={company.company_logo} thumbnail />
+                    </Col>
+                  </Row>
+                </Container>
+              </>
+              <br></br>
+
           <div className="input-group">
             <input
               type="search"
@@ -161,42 +185,16 @@ function CompanyPage() {
               onChange={handleSearchInputChange}
             />
           </div>
-          <div>
-            {reviews.length ? (
-              <>
-                <br></br>
-                <Container>
-                  <Row>
-                    <Col xs={6} md={4}>
-                      <Image src={reviews[0].company_logo} thumbnail />
-                    </Col>
-                  </Row>
-                </Container>
-              </>
-            ) : (
-              <>
-                <br></br>
-                <Container>
-                  <Row>
-                    <Col xs={6} md={4}>
-                      <Image
-                        src={
-                          "https://upload.wikimedia.org/wikipedia/commons/3/37/Sad-face.png"
-                        }
-                        thumbnail
-                      />
-                    </Col>
-                  </Row>
-                </Container>
-              </>
-            )}
+
+
             <br></br>
+            <div>
             {filteredReviews.map((review) => (
               <div key={review.id}>
                 <Card style={{ width: "64rem" }}>
                   <Card.Body>
                     <Card.Title>
-                      {review.anonymous === true ? "" : `${review.username}`} $
+                      {review.anonymous ? "" : `${review.username}`} $
                       {review.salary}/yr {review.job_title}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">

@@ -21,7 +21,20 @@ const LoginForm = () => {
       setPassword(value);
     }
 
+    const handleKey = e => {
+      if (e.keyCode === 13) {
+        try {
+          login(username, password);
 
+          setUsername('');
+          setPassword('');
+
+      } catch (error) {
+          console.error('Error fetching data:', error);
+
+      }
+      }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,12 +59,12 @@ const LoginForm = () => {
           <div className="row">
 
           <InputGroup className="container-fluid">
-            {/* <InputGroup.Text className="form-control-lg" id="basic-addon1">Username:</InputGroup.Text> */}
             <Form.Control
               placeholder="Username"
               aria-label="text"
               className="form-control"
               onChange={handleUsernameChange}
+              onKeyDown={handleKey}
             />
           </InputGroup>
           </div>
@@ -59,18 +72,18 @@ const LoginForm = () => {
           <div className="row">
 
           <InputGroup>
-            {/* <InputGroup.Text id="basic-addon1">Password:</InputGroup.Text> */}
             <Form.Control
               type="password"
               placeholder="Password"
               aria-label="password"
               className="form-control"
               onChange={handlePasswordChange}
+              onKeyDown={handleKey}
             />
           </InputGroup>
           </div>
           <div className="d-grid gap-2">
-          <div onClick={handleSubmit} className="btn btn-primary">Login</div>
+          <div onClick={handleSubmit} type="submit" className="btn btn-primary">Login</div>
           </div>
         </Form>
         </div>

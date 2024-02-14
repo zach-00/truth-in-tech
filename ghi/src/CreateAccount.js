@@ -59,6 +59,9 @@ const CreateAccount = () => {
   };
 
   return (
+    <div className="row">
+            <div className="offset-3 col-6">
+                <div className="shadow p-4 mt-4">
     <>
       <h1>Create an Account</h1>
       <form onSubmit={handleSubmit}>
@@ -128,9 +131,12 @@ const CreateAccount = () => {
           <label htmlFor="password"></label>
         </div>
 
-        <button className="btn btn-primary">Create</button>
+        <button className="btn btn-outline-primary">Create</button>
       </form>
     </>
+    </div>
+    </div>
+    </div>
   );
 };
 export default CreateAccount;

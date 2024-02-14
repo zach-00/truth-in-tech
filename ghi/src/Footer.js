@@ -33,7 +33,7 @@ function Footer () {
               companies.  This helps our users to make informed
                decisions about their career choices and work environments.
                  This website is intended for anyone who is currently in
-                  or interested in breaking into the Technology career field.
+                  or interested in breaking into the technology career field.
           </p>
         </div>
         {/* <!-- Grid column --> */}

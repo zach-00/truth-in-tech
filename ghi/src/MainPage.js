@@ -104,7 +104,7 @@ function MainPage() {
                                 })}
                             <br></br>
                             This list stays up to date with our most reviewed companies.
-                            Click a company to be navigated to their list of reviews.
+                            Click a company to be navigated to their timeline of reviews.
                             </Offcanvas.Body>
                         </Offcanvas>
                         </>

@@ -105,6 +105,10 @@ const UpdateAccountForm = () => {
     }, [] );
 
   return (
+    <div className="row">
+            <div className="offset-3 col-6">
+                <div className="shadow p-4 mt-4">
+                  <h1>Update Account</h1>
     <div className="was-validated">
       <div className="center-image"><Avvvatars value={updateUserName} style={{shape: true}} size={100}/></div>
       <div className="mb-3">
@@ -157,16 +161,19 @@ const UpdateAccountForm = () => {
       </div>
       <div style={buttonContainerStyle}>
       <div className="mb-3">
-        <button type="submit" className="btn btn-primary" onClick={handleUpdate}>
+        <button type="submit" className="btn btn-outline-primary" onClick={handleUpdate}>
           Update
         </button>
       </div>
       <div className="mb-3">
-        <button type="delete" className="btn btn-danger" onClick={handleDelete}>
-          Delete
+        <button type="delete" className="btn btn-outline-danger" onClick={handleDelete}>
+          Delete Account
         </button>
       </div>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   );
 };

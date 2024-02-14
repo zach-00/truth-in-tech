@@ -74,7 +74,7 @@ function CompaniesList() {
                                     />
                                 </td>
                                 <td>
-                                    <button type="button" id={company.id} onClick={() => writeReview(company.id)} className="btn btn-success">Write a Review</button>
+                                    <button type="button" id={company.id} onClick={() => writeReview(company.id)} className="btn btn-outline-success">Write a Review</button>
                                 </td>
                             </tr>
                         );
