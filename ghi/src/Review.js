@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useState, useEffect } from "react"
+import { useParams } from "react-router"
+import { useGetReviewQuery, useDeleteReviewMutation, useGetCommentsQuery, usePostCommentMutation } from "./store/reviewsApi";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
@@ -11,18 +12,24 @@ import { Fragment } from "react";
 
 
 function Review() {
-  let { id } = useParams();
-  const { token } = useAuthContext();
-  const [review, setReview] = useState({});
-  const [username, setUsername] = useState("");
-  const [comments, setComments] = useState([]);
-  const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const [newComment, setNewComment] = useState("");
-  const [postedComment, setPostedComment] = useState(false);
-  const [ triedComment, setTriedComment ] = useState(false);
-  const errorMessage = (!triedComment) ? 'alert alert-danger mb-0 d-none' : 'alert alert-danger mb-0';
+
+    let {id} = useParams()
+    const {token} = useAuthContext()
+    const [username, setUsername] = useState('')
+    const navigate = useNavigate()
+    const { data: reviewData } = useGetReviewQuery(id);
+    const [deleteReview] = useDeleteReviewMutation();
+    const { data: commentData, isLoading: commentsLoading } = useGetCommentsQuery(id);
+    const  [postComment, result] = usePostCommentMutation();
+
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const [newComment, setNewComment] = useState("");
+    const [postedComment, setPostedComment] = useState(false);
+    const [triedComment, setTriedComment] = useState(false);
+    const errorMessage = (!triedComment) ? 'alert alert-danger mb-0 d-none' : 'alert alert-danger mb-0';
+
 
   const fetchToken = async () => {
     const tkn = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
@@ -33,50 +40,19 @@ function Review() {
     setUsername(response.account.username);
   };
 
-  useEffect(() => {
-    async function getReview() {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_HOST}/reviews/${id}`
-      );
+    useEffect(() => {
+        fetchToken();
+        setTriedComment(false);
+    }, [id, token, reviewData, commentData, postedComment]);
 
-      if (response.ok) {
-        const data = await response.json();
-        setReview(data);
-      }
+    const handleDeleteReview = async () => {
+        const result = await deleteReview(id).unwrap();
+        if (result) {
+            navigate(`/reviews/${reviewData.company_id}`);
+        }
     }
 
-    const fetchComments = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/reviews/${id}/comments`;
-    const response = await fetch(url);
-    if (response.ok) {
-      const data = await response.json();
-      setComments(data);
-    }
-  };
-    getReview();
-    fetchToken();
-    fetchComments();
-    setTriedComment(false);
-
-  }, [id, token, postedComment]);
-
-  const deleteReview = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/reviews/${id}`;
-    const fetchConfig = {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch(url, fetchConfig);
-
-    if (response.ok) {
-      navigate(`/reviews/${review.company_id}`);
-    }
-  };
-
-  const handleShow = () => {
+    const handleShow = () => {
     if (token === null) {
         setTriedComment(true);
     } else {
@@ -89,80 +65,68 @@ function Review() {
     setNewComment(value);
   }
 
-  const handleSubmit = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/reviews/${id}/comments`;
-
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
         if (newComment.length > 0) {
-            const commentData = {
-                body: newComment
+            const params = {
+                body: {body: newComment},
+                id: id,
         }
 
-    const fetchConfig = {
-      method: "POST",
-      body: JSON.stringify(commentData),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    };
+          await postComment(params);
+        }
 
+    } catch (err) {
+      console.error(err);
+    }
+}
 
-    const response = await fetch(url, fetchConfig);
-    if (response.ok) {
-        await response.json();
+useEffect(() => {
+  if (result.isSuccess) {
         setNewComment("");
         setShow(false);
         setPostedComment(true);
+    } else if (result.isError) {
+     console.error("Failed to submit comment successfully")
     }
-}
-} catch (err) {
-    console.error(err);
-}
-  }
+}, [result]);
 
-  return (
-    <div className="row">
-      <div className="offset-1 col-6">
-        <div>
-          <br></br>
-          <Card style={{ width: "60rem" }}>
-            <Card.Body>
-              <Card.Title>
-                <img
-                  alt=""
-                  src={`${review.company_logo}`}
-                  className="img-thumbnail"
-                  width="10%"
-                />
-              </Card.Title>
-              {review.anonymous ? (
-                ""
-              ) : (
-                <Card.Text> Reviewer: {review.username}</Card.Text>
-              )}
 
-              <Card.Subtitle className="mb-2 text-muted">
-                Job Title: {review.job_title}
-              </Card.Subtitle>
-              <Card.Text>{review.body}</Card.Text>
-              {username === review.username ? (
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={deleteReview}
-                >
-                  Delete
-                </button>
-              ) : (
-                ""
-              )}
-            </Card.Body>
-          </Card>
-        </div>
+    return (
+        <div className="row">
+            <div className="offset-1 col-6">
+                <div>
+                <br></br>
+                {reviewData ?
+                    <Card style={{ width: '60rem' }}>
+                        <Card.Body>
+                            <Card.Title>
+                                <img
+                                alt=""
+                                src={reviewData.company_logo}
+                                className = "img-thumbnail" width="10%"
+                                />
 
-        <div>
+                            </Card.Title>
+                            {reviewData.anonymous
+                            ? "Anonymous"
+                            : <Card.Text> Reviewer:  {reviewData.username}</Card.Text>}
+
+                        <Card.Subtitle className="mb-2 text-muted">Job Title:  {reviewData.job_title}</Card.Subtitle>
+                        <Card.Text>
+                            {reviewData.body}
+                        </Card.Text>
+                        {reviewData.username === username ?
+                            <button type="button" className="btn btn-danger" onClick={handleDeleteReview} >Delete</button>
+                            : ""
+                            }
+                    </Card.Body>
+                </Card>
+                : null
+                }
+            </div>
+            <div>
             <br></br>
           {" "}
           <>
@@ -182,7 +146,7 @@ function Review() {
                 <Modal.Body>
 
                     <InputGroup>
-                        <Form.Control onChange={handleCommentChange} value={newComment} as="textarea" aria-label="With textarea" />
+                        <Form.Control style={{height: 200}} onChange={handleCommentChange} value={newComment} as="textarea" aria-label="With textarea" />
                     </InputGroup>
 
                 </Modal.Body>
@@ -199,32 +163,38 @@ function Review() {
           </>
           <br></br>
           <br></br>
-          {comments.length
-          ? <h2>Comments</h2>
-          : null
-          }
-          {comments.map((comment, index) => {
-                return (
-                    <Fragment key={index}>
-                <Card key={comment.id} border="primary">
-                    <Card.Header className="d-flex header" as="h5">
-                        <div><p>{comment.username}</p></div>
-                        <div><p>{comment.date_created}</p></div>
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Text>
-                        {comment.body}
-                        </Card.Text>
 
-                    </Card.Body>
-                </Card>
-                <br></br>
-                </Fragment>
-                );
-          })}
-          <br></br>
+            {!commentsLoading && commentData.length
+              ? <h2>Comments</h2>
+              : null
+            }
+
+              {!commentsLoading && commentData.length ?
+               commentData.map((comment, index) => {
+                    return(
+                         <Fragment key={index}>
+                     <Card key={comment.id} border="primary">
+                         <Card.Header className="d-flex header" as="h5">
+                             <div><p>{comment.username}</p></div>
+                             <div><p>{comment.date_created}</p></div>
+                         </Card.Header>
+                         <Card.Body>
+                             <Card.Text>
+                             {comment.body}
+                             </Card.Text>
+
+                         </Card.Body>
+                     </Card>
+                     <br></br>
+                     </Fragment>
+                     );
+               })
+               : null
+              }
+
+            <br></br>
+            </div>
         </div>
-      </div>
     </div>
   );
 }
